@@ -1,13 +1,31 @@
 from rest_framework import serializers
 
-from .models import User, StudentProfile
+from .models import User
 
-class StudentSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = StudentProfile
+        model = User
         fields = [
-            'user',
-            'program',
-            'year',
-            'group'
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'role'
         ]
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
+
+# class StudentSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = StudentProfile
+#         fields = [
+#             'user',
+#             'program',
+#             'year',
+#             'group'
+#         ]

@@ -12,55 +12,60 @@ class User(AbstractUser):
 
     base_role = Role.ADMIN
 
-    role = models.CharField(max_length=50, choices=Role.choices)
+    username = models.EmailField(unique=True)
+    role = models.CharField(max_length=50, choices=Role.choices, default=base_role)
 
-    #using default on role won't work on student proxy so we override save
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.role = self.base_role
-            return super().save(*args, **kwargs)
-        
-        
-#Student.objects.all() returns all users so we use this to work with only students
-class StudentManager(BaseUserManager):
-    def get_queryset(self, *args, **kwargs):
-        results = super().get_queryset(*args, **kwargs)
-        return results.filter(role=User.Role.STUDENT)
+    REQUIRED_FIELDS = ["first_name", "last_name"]
+
     
 
-class Student(User):
-    base_role = User.Role.STUDENT
+    # #using default on role won't work on student proxy so we override save
+    # def save(self, *args, **kwargs):
+    #     if not self.pk:
+    #         self.role = self.base_role
+    #         return super().save(*args, **kwargs)
+        
+        
+# #Student.objects.all() returns all users so we use this to work with only students
+# class StudentManager(BaseUserManager):
+#     def get_queryset(self, *args, **kwargs):
+#         results = super().get_queryset(*args, **kwargs)
+#         return results.filter(role=User.Role.STUDENT)
+    
 
-    student = StudentManager()
+# class Student(User):
+#     base_role = User.Role.STUDENT
 
-    class Meta:
-        proxy = True 
+#     student = StudentManager()
 
-
-#used to create student profile
-@receiver(post_save, sender=Student)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created and instance.role == "STUDENT":
-        StudentProfile.objects.create(user=instance)
+#     class Meta:
+#         proxy = True 
 
 
-class StudentProfile(models.Model):
-    class Year(models.IntegerChoices):
-        YEAR1 = 1, "YEAR 1"
-        YEAR2 = 2, "YEAR 2"
-        YEAR3 = 3, "YEAR 3"
-        YEAR4 = 4, "YEAR 4"
+# #used to create student profile
+# @receiver(post_save, sender=Student)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created and instance.role == "STUDENT":
+#         StudentProfile.objects.create(user=instance)
 
-    class Program(models.TextChoices):
-        MATH = "MATH", "Mathematics"
-        APPLIED_MATH = "APPLIEDMATH", "Applied Mathematics"
-        CS_MATH = "CSMATH", "Mathematics and Computer Science"
-        CS = "CS", "Computer Science"
-        CTI = "CTI", "Computers and Information Technology"
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    program = models.CharField(max_length=50,choices=Program.choices)
-    year = models.IntegerField(choices=Year.choices)
-    group = models.CharField(max_length=30)
+# class StudentProfile(models.Model):
+#     class Year(models.IntegerChoices):
+#         YEAR1 = 1, "YEAR 1"
+#         YEAR2 = 2, "YEAR 2"
+#         YEAR3 = 3, "YEAR 3"
+#         YEAR4 = 4, "YEAR 4"
+
+#     class Program(models.TextChoices):
+#         MATH = "MATH", "Mathematics"
+#         APPLIED_MATH = "APPLIEDMATH", "Applied Mathematics"
+#         CS_MATH = "CSMATH", "Mathematics and Computer Science"
+#         CS = "CS", "Computer Science"
+#         CTI = "CTI", "Computers and Information Technology"
+
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     program = models.CharField(max_length=50,choices=Program.choices)
+#     year = models.IntegerField(choices=Year.choices)
+#     group = models.CharField(max_length=30)
 
 
