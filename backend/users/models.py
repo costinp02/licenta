@@ -1,4 +1,6 @@
+from typing import Any, Dict, Tuple
 from django.db import models
+from courses.models import Course
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -17,29 +19,47 @@ class User(AbstractUser):
 
     REQUIRED_FIELDS = ["first_name", "last_name"]
 
-    
+    def __str__(self) -> str:
+        return f"{self.first_name} {self.last_name}"
 
-    # #using default on role won't work on student proxy so we override save
+    
+class Student(models.Model):
+    class Year(models.IntegerChoices):
+        YEAR1 = 1, "YEAR 1"
+        YEAR2 = 2, "YEAR 2"
+        YEAR3 = 3, "YEAR 3"
+        YEAR4 = 4, "YEAR 4"
+
+    class Program(models.TextChoices):
+        MATH = "MATH", "Mathematics"
+        APPLIED_MATH = "APPLIEDMATH", "Applied Mathematics"
+        CS_MATH = "CSMATH", "Mathematics and Computer Science"
+        CS = "CS", "Computer Science"
+        CTI = "CTI", "Computers and Information Technology"
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    program = models.CharField(max_length=50,choices=Program.choices)
+    year = models.IntegerField(choices=Year.choices)
+    group = models.CharField(max_length=30)
+
+    # this breaks evrything and is overall a bad idea
     # def save(self, *args, **kwargs):
     #     if not self.pk:
-    #         self.role = self.base_role
-    #         return super().save(*args, **kwargs)
+    #         self.role = User.Role.STUDENT
+    #         # print("HERE======================================================================================")
+    #         return super().save(*args,**kwargs)
+
+    def delete(self,using=None):
+        if self.user:
+            self.user.delete()
+        super(Student, self).delete(using)
         
         
-# #Student.objects.all() returns all users so we use this to work with only students
-# class StudentManager(BaseUserManager):
-#     def get_queryset(self, *args, **kwargs):
-#         results = super().get_queryset(*args, **kwargs)
-#         return results.filter(role=User.Role.STUDENT)
-    
 
-# class Student(User):
-#     base_role = User.Role.STUDENT
 
-#     student = StudentManager()
-
-#     class Meta:
-#         proxy = True 
+class Teacher(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    courses = models.ManyToManyField(Course)
 
 
 # #used to create student profile
