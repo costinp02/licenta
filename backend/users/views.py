@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework import permissions, authentication
 
 from .models import User, Student, Teacher
-from .serializers import UserRegisterSerializer, UserEditSerializer, StudentRegisterSerializer, StudentEditSerializer, TeacherRegisterSerializer
+from .serializers import UserRegisterSerializer, UserEditSerializer, StudentRegisterSerializer, StudentEditSerializer, TeacherRegisterSerializer, TeacherEditSerializer
 
 class UserListCreateAPIView(generics.ListCreateAPIView):
     queryset = User.objects.all()
@@ -106,7 +106,7 @@ teacher_detail_view = TeacherDetailAPIView.as_view()
 
 class TeacherUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = Teacher.objects.all()
-    serializer_class = TeacherRegisterSerializer
+    serializer_class = TeacherEditSerializer
     lookup_field = 'pk'
 
 teacher_update_view = TeacherUpdateAPIView.as_view()
@@ -114,7 +114,7 @@ teacher_update_view = TeacherUpdateAPIView.as_view()
 
 class TeacherPatchAPIView(generics.RetrieveUpdateAPIView):
     queryset = Teacher.objects.all()
-    serializer_class = TeacherRegisterSerializer
+    serializer_class = TeacherEditSerializer
     lookup_field = 'pk'
 
 teacher_patch_view = TeacherPatchAPIView.as_view()

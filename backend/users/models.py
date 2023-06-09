@@ -42,50 +42,13 @@ class Student(models.Model):
     year = models.IntegerField(choices=Year.choices)
     group = models.CharField(max_length=30)
 
-    # this breaks evrything and is overall a bad idea
-    # def save(self, *args, **kwargs):
-    #     if not self.pk:
-    #         self.role = User.Role.STUDENT
-    #         # print("HERE======================================================================================")
-    #         return super().save(*args,**kwargs)
-
     def delete(self,using=None):
         if self.user:
             self.user.delete()
         super(Student, self).delete(using)
-        
-        
-
+              
 
 class Teacher(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     courses = models.ManyToManyField(Course)
-
-
-# #used to create student profile
-# @receiver(post_save, sender=Student)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created and instance.role == "STUDENT":
-#         StudentProfile.objects.create(user=instance)
-
-
-# class StudentProfile(models.Model):
-#     class Year(models.IntegerChoices):
-#         YEAR1 = 1, "YEAR 1"
-#         YEAR2 = 2, "YEAR 2"
-#         YEAR3 = 3, "YEAR 3"
-#         YEAR4 = 4, "YEAR 4"
-
-#     class Program(models.TextChoices):
-#         MATH = "MATH", "Mathematics"
-#         APPLIED_MATH = "APPLIEDMATH", "Applied Mathematics"
-#         CS_MATH = "CSMATH", "Mathematics and Computer Science"
-#         CS = "CS", "Computer Science"
-#         CTI = "CTI", "Computers and Information Technology"
-
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     program = models.CharField(max_length=50,choices=Program.choices)
-#     year = models.IntegerField(choices=Year.choices)
-#     group = models.CharField(max_length=30)
-
 

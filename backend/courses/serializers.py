@@ -12,3 +12,8 @@ class CourseSerializer(serializers.ModelSerializer):
             'optional',
             'year'
         ]
+
+class CourseOnlyIDSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ['id']

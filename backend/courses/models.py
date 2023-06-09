@@ -6,4 +6,6 @@ class Course(models.Model):
     credit_number = models.IntegerField()
     optional = models.BooleanField(default=False)
     year = models.IntegerField()
-# Create your models here.
+
+    def __str__(self) -> str:
+        return self.name

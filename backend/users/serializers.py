@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import User, Student, Teacher
-from courses.serializers import CourseSerializer
+from courses.serializers import CourseSerializer, CourseOnlyIDSerializer
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(style={'input_type': 'password'}, write_only=True, allow_blank=True)
@@ -130,16 +130,49 @@ class TeacherRegisterSerializer(serializers.ModelSerializer):
     user=UserRegisterSerializer()
     courses = CourseSerializer(many=True)
     class Meta:
-        model = Student
+        model = Teacher
         fields = [
+            'id',
             'user',
             'courses'
         ]
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
-        # print(user_data['role'])
+        print(user_data['role'])
         user_data['role'] = User.Role.TEACHER
         user = User.objects.create( **user_data)
         teacher = Teacher.objects.create(user=user, **validated_data)
         return teacher
+    
+class TeacherEditSerializer(serializers.ModelSerializer):
+    user = UserEditSerializer()
+    courses = CourseOnlyIDSerializer
+    class Meta:
+        model = Teacher
+        fields = [
+            'id',
+            'user',
+            'courses'
+        ]
+        extra_kwargs = {'user.username': {'read_only': True}}
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user')
+        user = instance.user
+        # print(user_data['password'])
+        instance.courses.set(validated_data.get('courses', instance.courses))
+
+        # instance.program = validated_data.get('program', instance.program)
+        # instance.year = validated_data.get('year', instance.year)
+        # instance.group = validated_data.get('group', instance.group)
+        instance.save()
+        user.first_name = user_data.get('first_name', user.first_name)
+        user.last_name = user_data.get('last_name', user.last_name)
+        if user_data['password'] != '':
+            instance.user.set_password(user_data['password'])
+            print("password was changed")
+        user.save()
+        print(instance.user.password)
+
+        return instance
