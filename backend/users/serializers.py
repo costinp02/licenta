@@ -173,6 +173,6 @@ class TeacherEditSerializer(serializers.ModelSerializer):
             instance.user.set_password(user_data['password'])
             print("password was changed")
         user.save()
-        print(instance.user.password)
+        # print(instance.user.password)
 
         return instance
