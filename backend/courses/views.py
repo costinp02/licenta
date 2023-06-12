@@ -7,7 +7,7 @@ from .serializers import CourseSerializer
 class CourseListCreateAPIView(generics.ListCreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permission_classes = [IsTeacherPermission]
+    permission_classes = [permissions.AllowAny]
 
 course_list_create_view  = CourseListCreateAPIView.as_view()
     

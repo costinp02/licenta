@@ -52,3 +52,6 @@ class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     courses = models.ManyToManyField(Course)
 
+    def __str__(self) -> str:
+        return f"{self.user.first_name} {self.user.last_name}"
+

@@ -5,4 +5,7 @@ class Classroom(models.Model):
     capacity = models.IntegerField()
     floor = models.IntegerField()
 
+    def __str__(self) -> str:
+        return self.name
+
 # Create your models here.

@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../axios';
 
 
 
@@ -21,16 +22,50 @@ import { useNavigate } from 'react-router-dom';
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+
   const history = useNavigate()
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    console.log("the button type is submit and thats why it works")
-    history("/home")
+
+    
+
+
+    axiosInstance
+			.post(`token/`, {
+				username: data.get('email'),
+				password: data.get('password'),
+			})
+			.then((res) => {
+				localStorage.setItem('access_token', res.data.access);
+				localStorage.setItem('refresh_token', res.data.refresh);
+				axiosInstance.defaults.headers['Authorization'] =
+					'JWT ' + localStorage.getItem('access_token');
+				history('/test');
+				console.log(res);
+				console.log(res.data);
+			})
+      .catch((error) => {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          const { status, data } = error.response;
+          console.log('Error status:', status);
+          console.log('Error message:', data.message);
+          alert("Please use a valid email and password")
+          event.target.elements.email.value = ''
+        event.target.elements.password.value = ''
+          // Update state with the error message for displaying on the sign-in page
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.log('No response received:', error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error:', error.message);
+        }
+      });
+    
   };
 
   return (
