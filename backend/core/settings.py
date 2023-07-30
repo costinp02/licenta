@@ -147,19 +147,19 @@ AUTH_USER_MODEL = "users.User"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES" : [
-        "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.TokenAuthentication"
     ],
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",
-        # "rest_framework.permissions.IsAuthenticatedOrReadOnly",
-        # "rest_framework.permissions.DjangoModelPermissions"
+        # "rest_framework.permissions.AllowAny",
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+        "rest_framework.permissions.DjangoModelPermissions"
     ]
 }
 
 SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES": ["Bearer"],
+    "AUTH_HEADER_TYPES": ('Bearer',),
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30), # minutes=5
     "REFRESH_TOKEN_LIFETIME": timedelta(hours=5), # days=1
 }
