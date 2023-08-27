@@ -22,7 +22,6 @@ table {
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  
 }
 
 td,
@@ -35,10 +34,9 @@ td {
   text-align: center;
 }
 
-
-
 /* Apply consistent styling to table body cells */
-tbody td, thead th  {
+tbody td,
+thead th {
   padding: 15px 10px; /* Adjust padding as needed */
 
   text-align: center;
@@ -50,4 +48,3 @@ select {
   max-width: 100px; /* Adjust the height as needed */
   white-space: normal;
 }
-

@@ -1,16 +1,22 @@
-import logo from "../assets/images/react-logo.png"
+import logo from "../assets/images/react-logo.png";
 
 export default function Header(props) {
-    return (
-      <nav className="nav-bar">
-        <p><img src={logo} alt="logo" height="40" /></p>
-        <ul>
-          <li><a href="/admin">Admin</a></li>
-          <li><a href="/gpt">GPT</a></li>
-          <li><a href="/home">Home</a></li>
-          <li><a href="/contact-us">Contact</a></li>
-          <li><a href="/">Login</a></li>
-        </ul>
-      </nav>
-    )
-  }
+  return (
+    <nav className="nav-bar">
+      <p>
+        <img src={logo} alt="logo" height="40" />
+      </p>
+      <ul>
+        <li>
+          <a href="/home">Home</a>
+        </li>
+        <li>
+          <a href="/contact-us">Contact</a>
+        </li>
+        <li>
+          <a href="/">Login</a>
+        </li>
+      </ul>
+    </nav>
+  );
+}

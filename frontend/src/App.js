@@ -1,14 +1,11 @@
-import './App.css';
-import Router from './components/Router';
+import "./App.css";
+import Router from "./components/Router";
 
 function App() {
-
-
-
   return (
-      <>
-        <Router/>
-      </>
+    <>
+      <Router />
+    </>
 
     // <div className="App">
     //   <header className="App-header">
