@@ -224,7 +224,6 @@ export const dummyCourses = [
     teacherId: 104,
     year: 1,
     program: "Computer Science",
-    classroom: "Room A102",
     show: true,
   },
   {
@@ -233,7 +232,7 @@ export const dummyCourses = [
     teacherId: 105,
     year: 1,
     program: "Computer Science",
-    classroom: "Room A103",
+
     show: true,
   },
   {
@@ -242,7 +241,6 @@ export const dummyCourses = [
     teacherId: 106,
     year: 1,
     program: "Computer Science",
-    classroom: "Room A104",
     show: true,
   },
   {
@@ -251,7 +249,6 @@ export const dummyCourses = [
     teacherId: 107,
     year: 1,
     program: "Computer Science",
-    classroom: "Room A105",
     show: true,
   },
   {
@@ -260,7 +257,6 @@ export const dummyCourses = [
     teacherId: 108,
     year: 1,
     program: "Computer Science",
-    classroom: "Room A106",
     show: true,
   },
 
@@ -271,7 +267,6 @@ export const dummyCourses = [
     teacherId: 109,
     year: 2,
     program: "Computer Science",
-    classroom: "Room A201",
     show: true,
   },
   {
@@ -280,7 +275,6 @@ export const dummyCourses = [
     teacherId: 110,
     year: 2,
     program: "Computer Science",
-    classroom: "Room A202",
     show: true,
   },
   {
@@ -289,7 +283,6 @@ export const dummyCourses = [
     teacherId: 111,
     year: 2,
     program: "Computer Science",
-    classroom: "Room A203",
     show: true,
   },
   {
@@ -298,7 +291,6 @@ export const dummyCourses = [
     teacherId: 112,
     year: 2,
     program: "Computer Science",
-    classroom: "Room A204",
     show: true,
   },
   {
@@ -307,7 +299,6 @@ export const dummyCourses = [
     teacherId: 113,
     year: 2,
     program: "Computer Science",
-    classroom: "Room A205",
     show: true,
   },
 
@@ -318,7 +309,6 @@ export const dummyCourses = [
     teacherId: 114,
     year: 3,
     program: "Computer Science",
-    classroom: "Room A301",
     show: true,
   },
   {
@@ -327,7 +317,6 @@ export const dummyCourses = [
     teacherId: 115,
     year: 3,
     program: "Computer Science",
-    classroom: "Room A302",
     show: true,
   },
   {
@@ -336,7 +325,6 @@ export const dummyCourses = [
     teacherId: 116,
     year: 3,
     program: "Computer Science",
-    classroom: "Room A303",
     show: true,
   },
   {
@@ -345,7 +333,6 @@ export const dummyCourses = [
     teacherId: 117,
     year: 3,
     program: "Computer Science",
-    classroom: "Room A304",
     show: true,
   },
   {
@@ -354,7 +341,6 @@ export const dummyCourses = [
     teacherId: 118,
     year: 3,
     program: "Computer Science",
-    classroom: "Room A305",
     show: true,
   },
   {
@@ -363,7 +349,6 @@ export const dummyCourses = [
     teacherId: 219,
     year: 1,
     program: "Mathematics",
-    classroom: "Room B203",
     show: true,
   },
   {
@@ -372,7 +357,6 @@ export const dummyCourses = [
     teacherId: 220,
     year: 1,
     program: "Mathematics",
-    classroom: "Room B204",
     show: true,
   },
   {
@@ -381,7 +365,6 @@ export const dummyCourses = [
     teacherId: 221,
     year: 1,
     program: "Mathematics",
-    classroom: "Room B205",
     show: true,
   },
   {
@@ -390,7 +373,6 @@ export const dummyCourses = [
     teacherId: 222,
     year: 1,
     program: "Mathematics",
-    classroom: "Room B206",
     show: true,
   },
   {
@@ -399,7 +381,6 @@ export const dummyCourses = [
     teacherId: 223,
     year: 1,
     program: "Mathematics",
-    classroom: "Room B207",
     show: true,
   },
 
@@ -410,7 +391,6 @@ export const dummyCourses = [
     teacherId: 224,
     year: 2,
     program: "Mathematics",
-    classroom: "Room B301",
     show: true,
   },
   {
@@ -419,7 +399,6 @@ export const dummyCourses = [
     teacherId: 225,
     year: 2,
     program: "Mathematics",
-    classroom: "Room B302",
     show: true,
   },
   {
@@ -428,7 +407,6 @@ export const dummyCourses = [
     teacherId: 226,
     year: 2,
     program: "Mathematics",
-    classroom: "Room B303",
     show: true,
   },
   {
@@ -437,7 +415,6 @@ export const dummyCourses = [
     teacherId: 227,
     year: 2,
     program: "Mathematics",
-    classroom: "Room B304",
     show: true,
   },
   {
@@ -446,7 +423,6 @@ export const dummyCourses = [
     teacherId: 228,
     year: 2,
     program: "Mathematics",
-    classroom: "Room B305",
     show: true,
   },
 
@@ -457,7 +433,6 @@ export const dummyCourses = [
     teacherId: 229,
     year: 3,
     program: "Mathematics",
-    classroom: "Room B401",
     show: true,
   },
   {
@@ -466,7 +441,6 @@ export const dummyCourses = [
     teacherId: 230,
     year: 3,
     program: "Mathematics",
-    classroom: "Room B402",
     show: true,
   },
   {
@@ -475,7 +449,6 @@ export const dummyCourses = [
     teacherId: 231,
     year: 3,
     program: "Mathematics",
-    classroom: "Room B403",
     show: true,
   },
   {
@@ -484,7 +457,6 @@ export const dummyCourses = [
     teacherId: 232,
     year: 3,
     program: "Mathematics",
-    classroom: "Room B404",
     show: true,
   },
   {
@@ -493,7 +465,6 @@ export const dummyCourses = [
     teacherId: 233,
     year: 3,
     program: "Mathematics",
-    classroom: "Room B405",
     show: true,
   },
   {
@@ -502,7 +473,6 @@ export const dummyCourses = [
     teacherId: 234,
     year: 1,
     program: "CTI",
-    classroom: "Room C101",
     show: true,
   },
   {
@@ -511,7 +481,6 @@ export const dummyCourses = [
     teacherId: 235,
     year: 1,
     program: "CTI",
-    classroom: "Room C102",
     show: true,
   },
   {
@@ -520,7 +489,6 @@ export const dummyCourses = [
     teacherId: 236,
     year: 1,
     program: "CTI",
-    classroom: "Room C103",
     show: true,
   },
   {
@@ -529,7 +497,6 @@ export const dummyCourses = [
     teacherId: 237,
     year: 1,
     program: "CTI",
-    classroom: "Room C104",
     show: true,
   },
   {
@@ -538,7 +505,6 @@ export const dummyCourses = [
     teacherId: 238,
     year: 1,
     program: "CTI",
-    classroom: "Room C105",
     show: true,
   },
 
@@ -549,7 +515,6 @@ export const dummyCourses = [
     teacherId: 239,
     year: 2,
     program: "CTI",
-    classroom: "Room C201",
     show: true,
   },
   {
@@ -558,7 +523,6 @@ export const dummyCourses = [
     teacherId: 240,
     year: 2,
     program: "CTI",
-    classroom: "Room C202",
     show: true,
   },
   {
@@ -567,7 +531,6 @@ export const dummyCourses = [
     teacherId: 241,
     year: 2,
     program: "CTI",
-    classroom: "Room C203",
     show: true,
   },
   {
@@ -576,7 +539,6 @@ export const dummyCourses = [
     teacherId: 242,
     year: 2,
     program: "CTI",
-    classroom: "Room C204",
     show: true,
   },
   {
@@ -585,7 +547,6 @@ export const dummyCourses = [
     teacherId: 243,
     year: 2,
     program: "CTI",
-    classroom: "Room C205",
     show: true,
   },
 
@@ -596,7 +557,6 @@ export const dummyCourses = [
     teacherId: 244,
     year: 3,
     program: "CTI",
-    classroom: "Room C301",
     show: true,
   },
   {
@@ -605,7 +565,6 @@ export const dummyCourses = [
     teacherId: 245,
     year: 3,
     program: "CTI",
-    classroom: "Room C302",
     show: true,
   },
   {
@@ -614,7 +573,6 @@ export const dummyCourses = [
     teacherId: 246,
     year: 3,
     program: "CTI",
-    classroom: "Room C303",
     show: true,
   },
   {
@@ -623,7 +581,6 @@ export const dummyCourses = [
     teacherId: 247,
     year: 3,
     program: "CTI",
-    classroom: "Room C304",
     show: true,
   },
   {
@@ -632,7 +589,6 @@ export const dummyCourses = [
     teacherId: 248,
     year: 3,
     program: "CTI",
-    classroom: "Room C305",
     show: true,
   },
   {
@@ -641,7 +597,6 @@ export const dummyCourses = [
     teacherId: 249,
     year: 4,
     program: "CTI",
-    classroom: "Room C401",
     show: true,
   },
   {
@@ -650,7 +605,6 @@ export const dummyCourses = [
     teacherId: 250,
     year: 4,
     program: "CTI",
-    classroom: "Room C402",
     show: true,
   },
   {
@@ -659,7 +613,6 @@ export const dummyCourses = [
     teacherId: 251,
     year: 4,
     program: "CTI",
-    classroom: "Room C403",
     show: true,
   },
   {
@@ -668,7 +621,6 @@ export const dummyCourses = [
     teacherId: 252,
     year: 4,
     program: "CTI",
-    classroom: "Room C404",
     show: true,
   },
   {
@@ -677,7 +629,6 @@ export const dummyCourses = [
     teacherId: 253,
     year: 4,
     program: "CTI",
-    classroom: "Room C405",
     show: true,
   },
 ];

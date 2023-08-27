@@ -17,26 +17,31 @@ export default function Schedule() {
   const [selectedYear, setSelectedYear] = useState(1);
   const [selectedCourses, setSelectedCourses] = useState({});
   const [selectedRooms, setSelectedRooms] = useState({});
-  const [selectedCoursesByYearAndProgram, setSelectedCoursesByYearAndProgram] = useState({});
+  const [selectedCoursesByProgramAndYear, setSelectedCoursesByProgramAndYear] = useState({});
 
 
   const filteredCourses = availableCourses.filter((course) =>
       course.program === selectedProgram && course.year === selectedYear && course.show === true);
   const filteredRooms = rooms.filter((room) => room.show === true);
-
+  
+  
   const newHandleCourseChange = (day, interval, courseId) => {
+    // debugger;
     const courseKey = `${day}-${interval}`;
     const newSelectedCourses = {
-      ...selectedCoursesByYearAndProgram,
-      [selectedYear]: {
-        ...selectedCoursesByYearAndProgram[selectedYear],
-        [selectedProgram]: {
-          ...selectedCoursesByYearAndProgram[selectedYear]?.[selectedProgram],
+      ...selectedCoursesByProgramAndYear,
+      [selectedProgram]: {
+        ...selectedCoursesByProgramAndYear[selectedProgram],
+        [selectedYear]: {
+          ...selectedCoursesByProgramAndYear[selectedProgram]?.[selectedYear],
           [courseKey]: courseId,
         },
       },
     };
-    setSelectedCoursesByYearAndProgram(newSelectedCourses);
+    filteredCourses.find(course => course.id === courseId).show = false;
+    setSelectedCoursesByProgramAndYear(newSelectedCourses);
+    
+    
   }
 
   const handleRemoveCourseAndRoom = (day, interval) => {
@@ -58,13 +63,15 @@ export default function Schedule() {
 
   const handleCourseChange = (day, interval, courseId) => {
     const courseKey = `${day}-${interval}`;
-    console.log(courseKey);
-      setSelectedCourses((prevSelectedCourses) => ({
-        ...prevSelectedCourses,
+    if(selectedCourses[courseKey]){
+      selectedCourses[courseKey].show = true;
+    }
+
+      setSelectedCourses(() => ({
+        ...selectedCourses,
         [courseKey]: courseId,
       }));
-      filteredCourses.find(course => course.id === courseId).show = false
-      console.log(filteredCourses.find(course => course.id === courseId));
+      filteredCourses.find(course => course.id === courseId).show = false;
   };
 
   const handleRoomChange = (day, interval, roomId) => {
