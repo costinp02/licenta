@@ -1,3 +1,7 @@
+import axiosInstance from "./axios";
+
+
+
 export const WeekDays = {
   MONDAY: "Monday",
   TUESDAY: "Tuesday",
