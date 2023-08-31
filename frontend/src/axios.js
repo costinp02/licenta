@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const baseURL = " http://127.0.0.1:8000/api/";
 
@@ -43,9 +44,10 @@ axiosInstance.interceptors.response.use(
       error.response.status === 401 &&
       error.response.statusText === "Unauthorized"
     ) {
+      debugger;
       const refreshToken = localStorage.getItem("refresh_token");
 
-      if (refreshToken) {
+      if (refreshToken && refreshToken !== 'undefined') {
         const tokenParts = JSON.parse(atob(refreshToken.split(".")[1]));
 
         // exp date in token is expressed in seconds, while now() returns milliseconds:
@@ -71,11 +73,19 @@ axiosInstance.interceptors.response.use(
             });
         } else {
           console.log("Refresh token is expired", tokenParts.exp, now);
-          window.location.href = "/login/";
+          alert("Session expired, please login again");
+
+          const navigate = useNavigate();
+          navigate('/', {redirect: true});
+          // window.location.href = "/";
         }
       } else {
         console.log("Refresh token not available.");
-        window.location.href = "/login/";
+        alert("Something went wrong, please login again");
+
+        const navigate = useNavigate();
+        navigate('/', {redirect: true});
+        // window.location.href = "/";
       }
     }
 

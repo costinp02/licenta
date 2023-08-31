@@ -8,13 +8,13 @@ export const ScheduleCell = ({
   filteredCourses, 
   rooms,
 
-  selectedCourses2,
-  setSelectedCourses2,
-  handleCourseChange2,
+  selectedCourses,
+  setSelectedCourses,
+  handleCourseChange,
 
-  selectedRooms2,
-  setSelectedRooms2,
-  handleRoomChange2,
+  selectedRooms,
+  setSelectedRooms,
+  handleRoomChange,
 
   selectedProgram,
   selectedYear, 
@@ -75,21 +75,18 @@ export const ScheduleCell = ({
           const course = filteredCourses.find(
             (course) => course.id === selectedOption.value,
           );
-          handleCourseChange2(dayData.day, cell.interval, selectedOption.value);
+          handleCourseChange(dayData.day, cell.interval, selectedOption.value);
           
-          setSelectedCourses2(() => ({
-            ...selectedCourses2,
+          setSelectedCourses(() => ({
+            ...selectedCourses,
             [selectedProgram]: {
-              ...selectedCourses2[selectedProgram],
+              ...selectedCourses[selectedProgram],
               [selectedYear]: {
-                ...selectedCourses2[selectedProgram]?.[selectedYear],
+                ...selectedCourses[selectedProgram]?.[selectedYear],
                 [`${dayData.day}-${cell.interval}`]: course
               }
             }
-            
-          }))
-
-          
+          }));
 
           
         }}
@@ -133,14 +130,14 @@ export const ScheduleCell = ({
             const room = rooms.find(
               (room) => room.id === selectedOption.value,
             );
-            handleRoomChange2(dayData.day, cell.interval, selectedOption.value);
+            handleRoomChange(dayData.day, cell.interval, selectedOption.value);
 
-            setSelectedRooms2((prevSelectedRooms) => ({
-              ...selectedRooms2,
+            setSelectedRooms((prevSelectedRooms) => ({
+              ...selectedRooms,
               [selectedProgram]: {
-                ...selectedRooms2[selectedProgram],
+                ...selectedRooms[selectedProgram],
                 [selectedYear]: {
-                  ...selectedRooms2[selectedProgram]?.[selectedYear],
+                  ...selectedRooms[selectedProgram]?.[selectedYear],
                   [`${dayData.day}-${cell.interval}`]: room
                 }
               }

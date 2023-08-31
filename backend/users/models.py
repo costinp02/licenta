@@ -1,9 +1,7 @@
-from typing import Any, Dict, Tuple
 from django.db import models
-from courses.models import Course
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
+
 
 
 class User(AbstractUser):
@@ -50,7 +48,7 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    courses = models.ManyToManyField(Course)
+    # courses = models.ManyToManyField(Course)
 
     def __str__(self) -> str:
         return f"{self.user.first_name} {self.user.last_name}"

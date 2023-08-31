@@ -1,32 +1,24 @@
-// ... (other imports and setup)
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ScheduleCell } from "../components/ScheduleCell";
-import { dummyCourses as availableCourses, rooms, scheduleCells } from "../utils";
+import { rooms, scheduleCells, collegePrograms } from "../utils";
+
 import "./Schedule.css";
 import  Select from "react-select";
 import axiosInstance from "../axios";
 
-const collegePrograms = [
-  { name: "Computer Science", minYear: 1, maxYear: 3 },
-  { name: "Mathematics", minYear: 1, maxYear: 3 },
-  { name: "CTI", minYear: 1, maxYear: 4 },
-];
 
 export default function Schedule() {
 
-  const [selectedProgram, setSelectedProgram] = useState(collegePrograms[0].name,);
+  const [selectedProgram, setSelectedProgram] = useState(collegePrograms[0].id,);
   const [selectedYear, setSelectedYear] = useState(1);
-  const [selectedCourses2, setSelectedCourses2] = useState({});
-  const [selectedRooms2, setSelectedRooms2] = useState({});
-  const [classrooms, setClassrooms] = useState([])
+  const [selectedCourses, setSelectedCourses] = useState({});
+  const [selectedRooms, setSelectedRooms] = useState({});
+  const [classrooms, setClassrooms] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const [filteredRooms, setFilteredRooms] = useState([]);
   
-  const addShowField = () => {
-    const newArray = classrooms.map(obj => ({
-      ...obj,
-      show: true
-    }));
-    setClassrooms(newArray);
-  };
+
 
   axiosInstance.interceptors.request.use(
     config => {
@@ -34,19 +26,64 @@ export default function Schedule() {
       return config;
     },
     error => {
-      console.log(error);
+      console.log('error');
     }
   )
 
-    
+  axiosInstance.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error) => {
+      if (error) {
+        console.log(` eroare ${error}`);
+        // Handle token expiration here
+        // For example, you can refresh the token and retry the request
+        // You might need to implement a token refresh mechanism on your backend
+        // and use the refreshed token to reattempt the failed request
+  
+        // You can also redirect the user to the login page or perform any other necessary actions
+      }
+      return Promise.reject(error);
+    }
+  );  
 
   const fetchRooms = useCallback( async () => {
     try {
-      const result = await axiosInstance.get('/classrooms/');
-      setClassrooms(result.data); 
+      // debugger;
+      const response = await axiosInstance.get('/classrooms/');
       
-      console.log(classrooms);
+
+      response.data.forEach((room) => {room.show = true})
+      // debugger;
+      setClassrooms(response.data); 
+      
+      // console.log(classrooms);
     }catch(error){
+      debugger;
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        const { status, data } = error.response;
+        console.log("Error status:", status);
+        console.log("Error message:", data.message);
+        // Update state with the error message for displaying on the sign-in page
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log("No response received:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Error:", error);
+      }
+    }
+  }, []);
+
+  const fetchCourses = useCallback( async () => {
+    try{
+      const result = await axiosInstance.get('/courses/');
+      result.data.forEach((course) => {course.show = true});
+      setCourses(result.data);
+    } catch(error) {
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
@@ -62,81 +99,85 @@ export default function Schedule() {
         console.log("Error:", error.message);
       }
     }
-  });
+  }, [])
 
+  useEffect(() => {
+    fetchRooms(); 
+  }, [])
 
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  useEffect(() => {
+    const filteredCourses = courses.filter((course) =>
+      course.program === selectedProgram &&
+      course.year === selectedYear &&
+      course.show === true
+    );
+
+    const filteredRooms = classrooms.filter((room) => room.show === true);
+  
+    // Update your state with filteredCourses
+    setFilteredCourses(filteredCourses);
+    setFilteredRooms(filteredRooms)
+  }, [courses, selectedProgram, selectedYear]);
   
 
-  // console.log(JSON.stringify(selectedCourses2));
-  console.log(`Courses: ${JSON.stringify(selectedCourses2, null, 2)}`);
-  console.log(`Rooms: ${JSON.stringify(selectedRooms2, null, 2)}`);
+  console.log(`Courses: ${JSON.stringify(selectedCourses, null, 2)}`);
+  console.log(`Rooms: ${JSON.stringify(selectedRooms, null, 2)}`);
 
-
-  const filteredCourses = availableCourses.filter((course) =>
-      course.program === selectedProgram && course.year === selectedYear && course.show === true);
-  const filteredRooms = rooms.filter((room) => room.show === true);
-  
-  
-  const newHandleCourseChange = (day, interval, courseId) => {
+ 
+  const handleCourseChange = (day, interval, courseId) => {
     // debugger;
     const courseKey = `${day}-${interval}`;
-    if(selectedCourses2[selectedProgram]?.[selectedYear]?.[courseKey]){
-      selectedCourses2[selectedProgram][selectedYear][courseKey].show = true;
+    if(selectedCourses[selectedProgram]?.[selectedYear]?.[courseKey]){
+      selectedCourses[selectedProgram][selectedYear][courseKey].show = true;
     }
 
     filteredCourses.find(course => course.id === courseId).show = false;
 
   }
 
-  const newHandleRoomChange = (day, interval, roomId) => {
+  const handleRoomChange = (day, interval, roomId) => {
     const roomKey = `${day}-${interval}`;
-    if(selectedRooms2[selectedProgram]?.[selectedYear]?.[roomKey]){
-      selectedRooms2[selectedProgram][selectedYear][roomKey].show = true;
+    if(selectedRooms[selectedProgram]?.[selectedYear]?.[roomKey]){
+      selectedRooms[selectedProgram][selectedYear][roomKey].show = true;
     }
-    // const newSelectedRooms = {
-    //   ...selectedRooms2,
-    //   [selectedProgram]: {
-    //     ...selectedCourses2[selectedProgram],
-    //     [selectedYear]: {
-    //       ...selectedCourses2[selectedProgram]?.[selectedYear],
-    //       [roomKey]: roomId,
-    //     }
-    //   }
-    // };
+    // debugger;
     filteredRooms.find( room => room.id === roomId).show = false;
-    // setSelectedRooms2(newSelectedRooms);
   }
 
   const handleRemoveCourseAndRoom2 = (day, interval) => {
     // debugger;
     const mapKey = `${day}-${interval}`;
-    selectedCourses2[selectedProgram][selectedYear][mapKey].show = true;
-    selectedRooms2[selectedProgram][selectedYear][mapKey].show = true;
+    selectedCourses[selectedProgram][selectedYear][mapKey].show = true;
+    selectedRooms[selectedProgram][selectedYear][mapKey].show = true;
     const newSelectedCourses = {
-      ...selectedCourses2,
+      ...selectedCourses,
       [selectedProgram]: {
-        ...selectedCourses2[selectedProgram],
+        ...selectedCourses[selectedProgram],
         [selectedYear]: {
-          ...selectedCourses2[selectedProgram]?.[selectedYear]
+          ...selectedCourses[selectedProgram]?.[selectedYear]
         },
       },
     };
     
     delete newSelectedCourses[selectedProgram][selectedYear][mapKey];  
-    setSelectedCourses2(newSelectedCourses);
+    setSelectedCourses(newSelectedCourses);
     
     const newSelectedRooms = {
-      ...selectedRooms2,
+      ...selectedRooms,
       [selectedProgram]: {
-        ...selectedRooms2[selectedProgram],
+        ...selectedRooms[selectedProgram],
         [selectedYear]: {
-          ...selectedRooms2[selectedProgram]?.[selectedYear]
+          ...selectedRooms[selectedProgram]?.[selectedYear]
         },
       },
     };
     
     delete newSelectedRooms[selectedProgram][selectedYear][mapKey];
-    setSelectedRooms2(newSelectedRooms);
+    setSelectedRooms(newSelectedRooms);
   }
 
 
@@ -186,7 +227,7 @@ export default function Schedule() {
         }}
 
         options={collegePrograms.map((program) => ({
-          value: program.name,
+          value: program.id,
           label: program.name
         }))}
 
@@ -236,20 +277,21 @@ export default function Schedule() {
             {dayData.cells.map((cell) => (
               <td key={cell.interval}>
                 {/* Conditionally render based on selectedCourses */}
-                {selectedCourses2[selectedProgram]?.[selectedYear]?.[`${dayData.day}-${cell.interval}`] && selectedRooms2[selectedProgram]?.[selectedYear]?.[`${dayData.day}-${cell.interval}`] ? (
+                {selectedCourses[selectedProgram]?.[selectedYear]?.[`${dayData.day}-${cell.interval}`] && selectedRooms[selectedProgram]?.[selectedYear]?.[`${dayData.day}-${cell.interval}`] ? (
                   <div>
                     <div>
-                      {selectedCourses2[selectedProgram][selectedYear][`${dayData.day}-${cell.interval}`].name}
+                      {selectedCourses[selectedProgram][selectedYear][`${dayData.day}-${cell.interval}`].name}
                     </div>
                     <div>
-                      {
-                        selectedCourses2[selectedProgram][selectedYear][`${dayData.day}-${cell.interval}`]
-                          .teacherId
+                      { 
+                        `${selectedCourses[selectedProgram][selectedYear][`${dayData.day}-${cell.interval}`]
+                        .teacher.user.first_name} ${selectedCourses[selectedProgram][selectedYear][`${dayData.day}-${cell.interval}`]
+                        .teacher.user.last_name}`
                       }
                     </div>
                     <div>
                       {
-                        selectedRooms2[selectedProgram][selectedYear][`${dayData.day}-${cell.interval}`]
+                        selectedRooms[selectedProgram][selectedYear][`${dayData.day}-${cell.interval}`]
                           .name
                       }
                     </div>
@@ -271,13 +313,13 @@ export default function Schedule() {
                       filteredCourses={filteredCourses}
                       rooms={filteredRooms}
 
-                      selectedCourses2={selectedCourses2}
-                      handleCourseChange2={newHandleCourseChange}
-                      setSelectedCourses2={setSelectedCourses2}
+                      selectedCourses={selectedCourses}
+                      handleCourseChange={handleCourseChange}
+                      setSelectedCourses={setSelectedCourses}
 
-                      selectedRooms2={selectedRooms2}
-                      setSelectedRooms2={setSelectedRooms2}
-                      handleRoomChange2={newHandleRoomChange}
+                      selectedRooms={selectedRooms}
+                      setSelectedRooms={setSelectedRooms}
+                      handleRoomChange={handleRoomChange}
 
                       selectedProgram={selectedProgram}
                       selectedYear={selectedYear}
@@ -290,11 +332,8 @@ export default function Schedule() {
       </tbody>
       </table>
       <div>
-        <button onClick={() => {fetchRooms(); addShowField();}}>Save changes</button>
+        <button onClick={() => { debugger;console.log(`fetched rooms: ${JSON.stringify(classrooms)}`); console.log(`fetched courses: ${JSON.stringify(courses)}`)}}>Save changes</button>
       </div>
     </div>
   );
 }
-
-
-// selectedCourses[`${dayData.day}-${cell.interval}`] && selectedRooms[`${dayData.day}-${cell.interval}`]

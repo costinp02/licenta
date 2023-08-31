@@ -20,7 +20,7 @@ import axiosInstance from "../axios";
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,7 +36,33 @@ export default function SignIn() {
         localStorage.setItem("refresh_token", res.data.refresh);
         axiosInstance.defaults.headers["Authorization"] =
           "JWT " + localStorage.getItem("access_token");
-        history("/admin");
+        const token = res.data.access;
+        const tokenParts = token.split(".");
+        const encodedPayload = tokenParts[1];
+
+        const decodedPayload = atob(encodedPayload);
+        const payloadObject = JSON.parse(decodedPayload);
+        const user_role = payloadObject.role
+        console.log(`data: ${JSON.stringify(decodedPayload)}`);
+        console.log(`user id: ${payloadObject.user_id}`);
+        console.log(`role ${user_role}`);
+        switch(user_role) {
+          case "STUDENT":
+            navigate('/student', {replace: true});
+            break;
+          case "TEACHER":
+            navigate('/teacher', {replace: true});
+            break;
+          case "ADMIN":
+            navigate('/admin', {replace: true});
+            break;
+        }
+
+        
+
+        // now do a get request with the user id:
+
+        // navigate("/admin");
         console.log(res);
         console.log(res.data);
       })

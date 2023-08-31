@@ -1,7 +1,10 @@
 from rest_framework import serializers
 
 from .models import User, Student, Teacher
-from courses.serializers import CourseSerializer, CourseOnlyIDSerializer
+
+'''
+USER SERIALIZERS
+'''
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(style={'input_type': 'password'}, write_only=True, allow_blank=True)
@@ -128,13 +131,13 @@ TEACHER SERIALIZERS
 
 class TeacherRegisterSerializer(serializers.ModelSerializer):
     user=UserRegisterSerializer()
-    courses = CourseSerializer(many=True)
+    # courses = CourseSerializer(many=True)
     class Meta:
         model = Teacher
         fields = [
             'id',
-            'user',
-            'courses'
+            'user'
+
         ]
 
     def create(self, validated_data):
@@ -147,13 +150,12 @@ class TeacherRegisterSerializer(serializers.ModelSerializer):
     
 class TeacherEditSerializer(serializers.ModelSerializer):
     user = UserEditSerializer()
-    courses = CourseOnlyIDSerializer
+    # courses = CourseOnlyIDSerializer
     class Meta:
         model = Teacher
         fields = [
             'id',
             'user',
-            'courses'
         ]
         extra_kwargs = {'user.username': {'read_only': True}}
 
@@ -161,11 +163,8 @@ class TeacherEditSerializer(serializers.ModelSerializer):
         user_data = validated_data.pop('user')
         user = instance.user
         # print(user_data['password'])
-        instance.courses.set(validated_data.get('courses', instance.courses))
+        # instance.courses.set(validated_data.get('courses', instance.courses))
 
-        # instance.program = validated_data.get('program', instance.program)
-        # instance.year = validated_data.get('year', instance.year)
-        # instance.group = validated_data.get('group', instance.group)
         instance.save()
         user.first_name = user_data.get('first_name', user.first_name)
         user.last_name = user_data.get('last_name', user.last_name)

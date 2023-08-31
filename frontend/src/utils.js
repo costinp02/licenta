@@ -10,6 +10,13 @@ export const WeekDays = {
   FRIDAY: "Friday",
 };
 
+export const collegePrograms = [
+  { id: "CS", name: "Computer Science", minYear: 1, maxYear: 3 },
+  { id: "MATH", name: "Mathematics", minYear: 1, maxYear: 3 },
+  { id: "CTI", name: "CTI", minYear: 1, maxYear: 4 },
+];
+
+
 export let scheduleCells = [
   {
     day: WeekDays.MONDAY,

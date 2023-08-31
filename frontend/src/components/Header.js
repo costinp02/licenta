@@ -13,9 +13,7 @@ export default function Header(props) {
         <li>
           <a href="/contact-us">Contact</a>
         </li>
-        <li>
-          <a href="/">Login</a>
-        </li>
+       
       </ul>
     </nav>
   );
