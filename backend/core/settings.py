@@ -147,12 +147,11 @@ AUTH_USER_MODEL = "users.User"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES" : [
-        # "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-        "rest_framework.authentication.TokenAuthentication"
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication"
     ],
     "DEFAULT_PERMISSION_CLASSES": [
-        # "rest_framework.permissions.AllowAny",
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
         "rest_framework.permissions.DjangoModelPermissions"
     ]
@@ -160,7 +159,7 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ('Bearer',),
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5), # minutes=5
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1), # days=1
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5), 
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1), 
     "TOKEN_OBTAIN_SERIALIZER" :'backend.api.serializers.CustomPayloadSerializer'
 }

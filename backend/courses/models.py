@@ -9,8 +9,6 @@ class Course(models.Model):
 
     class Program(models.TextChoices):
         MATH = "MATH", "Mathematics"
-        APPLIED_MATH = "APPLIEDMATH", "Applied Mathematics"
-        CS_MATH = "CSMATH", "Mathematics and Computer Science"
         CS = "CS", "Computer Science"
         CTI = "CTI", "Computers and Information Technology"
         DEFAULT = "DEFAULT", "Default"
