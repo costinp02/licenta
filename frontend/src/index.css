@@ -2,15 +2,16 @@ html {
   width: 100%;
 }
 
-body {
+/* body {
   min-width: 100%;
   margin: 0;
   padding: 0;
+  justify-content: center;
   font-family: "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-}
+} */
 
