@@ -1,22 +1,46 @@
 import React from "react";
 import './RoomForm.css'
+import axiosInstance from "../../../axios";
 
 export default function RoomForm () {
+    
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        try {
+            const roomData = {
+                name: data.get("name"),
+                capacity: data.get("capacity"),
+                floor: data.get("floor")
+            }
+            console.log(roomData);
+            const access_token = localStorage.getItem('access_token');
+            const response = await axiosInstance.post('/classrooms/', roomData, {
+                headers: {
+                    'Authorization': `Bearer ${access_token}`
+                }
+            });
+            alert(`Classroom created succesfuly!`);
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
         <>
-            <div class="form-container">
-                <h2>Add Room</h2>
-                <form>
-                    <div class="form-group">
-                        <label for="name">Room Name:</label>
+            <h2>Add Room</h2>
+            <div className="form-container-room">
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="name">Room Name:</label>
                         <input type="text" id="name" name="name" required/>
                     </div>
-                    <div class="form-group">
-                        <label for="capacity">Capacity:</label>
+                    <div className="form-group">
+                        <label htmlFor="capacity">Capacity:</label>
                         <input type="text" id="capacity" name="capacity" required/>
                     </div>
-                    <div class="form-group">
-                        <label for="floor">Floor:</label>
+                    <div className="form-group">
+                        <label htmlFor="floor">Floor:</label>
                         <input type="text" id="floor" name="floor" required/>
                     </div>
                     <button type="submit">Add Room</button>

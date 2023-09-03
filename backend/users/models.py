@@ -30,8 +30,6 @@ class Student(models.Model):
 
     class Program(models.TextChoices):
         MATH = "MATH", "Mathematics"
-        APPLIED_MATH = "APPLIEDMATH", "Applied Mathematics"
-        CS_MATH = "CSMATH", "Mathematics and Computer Science"
         CS = "CS", "Computer Science"
         CTI = "CTI", "Computers and Information Technology"
 
@@ -48,7 +46,7 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # courses = models.ManyToManyField(Course)
+    phone = models.CharField(max_length=15, blank=False)
 
     def __str__(self) -> str:
         return f"{self.user.first_name} {self.user.last_name}"

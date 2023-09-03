@@ -136,7 +136,8 @@ class TeacherRegisterSerializer(serializers.ModelSerializer):
         model = Teacher
         fields = [
             'id',
-            'user'
+            'user',
+            'phone',
 
         ]
 
@@ -156,6 +157,7 @@ class TeacherEditSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'user',
+            'phone',
         ]
         extra_kwargs = {'user.username': {'read_only': True}}
 
@@ -165,6 +167,7 @@ class TeacherEditSerializer(serializers.ModelSerializer):
         # print(user_data['password'])
         # instance.courses.set(validated_data.get('courses', instance.courses))
 
+        instance.phone = validated_data.get('phone', instance.phone)
         instance.save()
         user.first_name = user_data.get('first_name', user.first_name)
         user.last_name = user_data.get('last_name', user.last_name)

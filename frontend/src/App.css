@@ -31,9 +31,6 @@
   display: flex;
 }
 
-.nav-bar ul li {
-  padding-left: 1rem;
-}
 
 .nav-bar a {
   text-decoration: none;

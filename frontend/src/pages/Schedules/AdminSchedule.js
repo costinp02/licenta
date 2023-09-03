@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ScheduleCell } from "../components/ScheduleCell";
-import { rooms, scheduleCells, collegePrograms } from "../utils";
+import { ScheduleCell } from "../../components/ScheduleCell";
+import { rooms, scheduleCells, collegePrograms } from "../../utils";
 
 import "./Schedule.css";
 import  Select from "react-select";
-import axiosInstance from "../axios";
+import axiosInstance from "../../axios";
 
 
-export default function Schedule() {
+export default function AdminSchedule() {
 
   const [selectedProgram, setSelectedProgram] = useState(collegePrograms[0].id,);
   const [selectedYear, setSelectedYear] = useState(1);
@@ -38,11 +38,6 @@ export default function Schedule() {
       if (error) {
         console.log(` eroare ${error}`);
         // Handle token expiration here
-        // For example, you can refresh the token and retry the request
-        // You might need to implement a token refresh mechanism on your backend
-        // and use the refreshed token to reattempt the failed request
-  
-        // You can also redirect the user to the login page or perform any other necessary actions
       }
       return Promise.reject(error);
     }
@@ -51,7 +46,11 @@ export default function Schedule() {
   const fetchRooms = useCallback( async () => {
     try {
       // debugger;
-      const response = await axiosInstance.get('/classrooms/');
+      const response = await axiosInstance.get('/classrooms/', {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+        }
+    });
       
 
       response.data.forEach((room) => {room.show = true})
@@ -276,8 +275,8 @@ export default function Schedule() {
             <th>{dayData.day}</th>
             {dayData.cells.map((cell) => (
               <td key={cell.interval}>
-                {/* Conditionally render based on selectedCourses */}
-                {selectedCourses[selectedProgram]?.[selectedYear]?.[`${dayData.day}-${cell.interval}`] && selectedRooms[selectedProgram]?.[selectedYear]?.[`${dayData.day}-${cell.interval}`] ? (
+                {selectedCourses[selectedProgram]?.[selectedYear]?.[`${dayData.day}-${cell.interval}`] && 
+                selectedRooms[selectedProgram]?.[selectedYear]?.[`${dayData.day}-${cell.interval}`] ? (
                   <div>
                     <div>
                       {selectedCourses[selectedProgram][selectedYear][`${dayData.day}-${cell.interval}`].name}

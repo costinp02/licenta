@@ -69,7 +69,8 @@ CORS_URLS_REGEX = r"^/api/.*"
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8111',
     'https://localhost:8111',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'http://192.168.100.4:3000',
 ]
 
 TEMPLATES = [
@@ -159,7 +160,7 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ('Bearer',),
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5), 
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=5), 
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1), 
     "TOKEN_OBTAIN_SERIALIZER" :'backend.api.serializers.CustomPayloadSerializer'
 }
