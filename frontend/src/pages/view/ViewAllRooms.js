@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axiosInstance from "../../axios";
 
 export default function ViewALLRooms(){
@@ -47,13 +48,13 @@ export default function ViewALLRooms(){
             </p>
 
             <p>
-                <a>{`Capacity: ${room.capacity} seats`}</a>
+                <b>{`Capacity: ${room.capacity} seats`}</b>
             </p>
 
             <p>
-                <a>{`Floor: ${room.floor}`}</a>
+                <b>{`Floor: ${room.floor}`}</b>
             </p>
-            <a href={`/admin/room-edit/${room.id}`} className="btn">Edit</a>
+            <Link to={`/admin/room-form/edit/${room.id}`} className="btn">Edit</Link>
         </div>
         )
     return (

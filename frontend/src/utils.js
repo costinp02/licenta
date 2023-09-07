@@ -1,7 +1,3 @@
-import axiosInstance from "./axios";
-
-
-
 export const WeekDays = {
   MONDAY: "Monday",
   TUESDAY: "Tuesday",
@@ -715,5 +711,22 @@ export const handleProgram = (user) => {
               break;
       }
       
+  }
+}
+
+export const handleError = (error) => {
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    const { status, data } = error.response;
+    console.log("Error status:", status);
+    console.log("Error message:", data.message);
+    // Update state with the error message for displaying on the sign-in page
+  } else if (error.request) {
+      // The request was made but no response was received
+      console.log("No response received:", error.request);
+  } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log("Error:", error);
   }
 }

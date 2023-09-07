@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axiosInstance from "../../axios";
 import { handleProgram } from "../../utils";
 
@@ -51,7 +52,7 @@ export default function ViewAllStudents(){
                 <b>{`Year: ${student.year}  `}</b>
                 
             </p>
-            <a href={`/admin/student-edit/${student.id}`} className="btn">Edit</a>
+            <Link to={`/admin/student-form/edit/${student.user.id}`} className="btn">Edit</Link>
         </div>
         )
 

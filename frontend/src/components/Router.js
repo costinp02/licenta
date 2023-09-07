@@ -15,6 +15,8 @@ import ViewALLRooms from "../pages/view/ViewAllRooms";
 import ViewAllStudents from "../pages/view/VIewAllStudents";
 import ViewAllTeachers from "../pages/view/ViewAllTeachers";
 import ViewAllCourses from "../pages/view/ViewAllCourses";
+import RoomEdit from "../pages/edit/EditRoom";
+import StudentEdit from "../pages/edit/EditStudent";
 
 function ProtectedRoute({ children }) {
   const isLoggedIn = localStorage.getItem('access_token') && localStorage.getItem('refresh_token');
@@ -55,6 +57,8 @@ export default function Router() {
           <Route path="/admin/students-view" element={<ProtectedRoute>< ViewAllStudents /></ProtectedRoute>} />
           <Route path="/admin/teachers-view" element={<ProtectedRoute>< ViewAllTeachers /></ProtectedRoute>} />
           <Route path="/admin/courses-view" element={<ProtectedRoute>< ViewAllCourses /></ProtectedRoute>} />
+          <Route path="/admin/room-form/edit/:id" element={<ProtectedRoute><RoomEdit /></ProtectedRoute>} />
+          <Route path="/admin/student-form/edit/:id" element={<ProtectedRoute><StudentEdit /></ProtectedRoute>} />
         </Route>
       </Routes>
     </BrowserRouter>

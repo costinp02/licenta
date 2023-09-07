@@ -45,8 +45,13 @@ export default function ViewAllCourses(){
             </p>
 
             <p>
+                <b>{`Teacher: ${course.teacher.user.first_name} ${course.teacher.user.last_name}`}</b>
+            </p>
+
+            <p>
                 <b>{`Year: ${course.year}`}</b>
             </p>
+            <a href={`/admin/course-edit/${course.id}`} className="btn">Edit</a>
         </div>
         )
 
