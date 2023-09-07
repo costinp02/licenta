@@ -47,7 +47,7 @@ axiosInstance.interceptors.response.use(
       debugger;
       const refreshToken = localStorage.getItem("refresh_token");
 
-      if (refreshToken && refreshToken !== 'undefined') {
+      if (refreshToken && refreshToken !== "undefined") {
         const tokenParts = JSON.parse(atob(refreshToken.split(".")[1]));
 
         // exp date in token is expressed in seconds, while now() returns milliseconds:
@@ -76,7 +76,7 @@ axiosInstance.interceptors.response.use(
           alert("Session expired, please login again");
 
           const navigate = useNavigate();
-          navigate('/', {redirect: true});
+          navigate("/", { redirect: true });
           // window.location.href = "/";
         }
       } else {
@@ -84,7 +84,7 @@ axiosInstance.interceptors.response.use(
         alert("Something went wrong, please login again");
 
         const navigate = useNavigate();
-        navigate('/', {redirect: true});
+        navigate("/", { redirect: true });
         // window.location.href = "/";
       }
     }

@@ -12,7 +12,6 @@ export const collegePrograms = [
   { id: "CTI", name: "CTI", minYear: 1, maxYear: 4 },
 ];
 
-
 export let scheduleCells = [
   {
     day: WeekDays.MONDAY,
@@ -20,20 +19,20 @@ export let scheduleCells = [
       {
         interval: "8-10",
         courses: {
-          name:"POO",
-          teacher_name:"I. Popescu",
+          name: "POO",
+          teacher_name: "I. Popescu",
           course_type: "Lecture",
-          room: "Room 105"
+          room: "Room 105",
           //course data for selected courses
         },
       },
       {
         interval: "10-12",
         courses: {
-          name:"Web Development Fundamentals",
-          teacher_name:"P. Ionescu",
+          name: "Web Development Fundamentals",
+          teacher_name: "P. Ionescu",
           course_type: "Lecture",
-          room: "Room 105"
+          room: "Room 105",
           //course data for selected courses
         },
       },
@@ -70,7 +69,6 @@ export let scheduleCells = [
       {
         interval: "8-10",
         courses: {
-          
           //course data for selected courses
         },
       },
@@ -83,20 +81,20 @@ export let scheduleCells = [
       {
         interval: "12-14",
         courses: {
-          name:"Introduction to Programming with Python",
-          teacher_name:"E. Stanescu",
+          name: "Introduction to Programming with Python",
+          teacher_name: "E. Stanescu",
           course_type: "Lecture",
-          room: "Room 215"
+          room: "Room 215",
           //course data for selected courses
         },
       },
       {
         interval: "14-16",
         courses: {
-          name:"Introduction to Programming with Python",
-          teacher_name:"P. Iancu",
+          name: "Introduction to Programming with Python",
+          teacher_name: "P. Iancu",
           course_type: "Seminar",
-          room: "Room 302"
+          room: "Room 302",
           //course data for selected courses
         },
       },
@@ -126,10 +124,10 @@ export let scheduleCells = [
       {
         interval: "10-12",
         courses: {
-          name:"Web Development Fundamentals",
-          teacher_name:"T. Bratosin",
+          name: "Web Development Fundamentals",
+          teacher_name: "T. Bratosin",
           course_type: "Laboratory",
-          room: "Room 216"
+          room: "Room 216",
           //course data for selected courses
         },
       },
@@ -143,10 +141,10 @@ export let scheduleCells = [
         interval: "14-16",
         courses: {
           //course data for selected courses
-          name:"POO",
-          teacher_name:"D. Pop",
+          name: "POO",
+          teacher_name: "D. Pop",
           course_type: "Laboratory",
-          room: "Room 121"
+          room: "Room 121",
         },
       },
       {
@@ -696,23 +694,22 @@ export let rooms = [
   { id: 28, name: "Room 603", show: true },
   { id: 29, name: "Room 604", show: true },
   { id: 30, name: "Room 605", show: true },
-]
+];
 
 export const handleProgram = (user) => {
-  if( user ) {
-      switch (user.program){
-          case "MATH":
-              return "Mathematics";
-          case "CS":
-              return "Computer Science";
-          case "CTI":
-              return "CTI";
-          default:
-              break;
-      }
-      
+  if (user) {
+    switch (user.program) {
+      case "MATH":
+        return "Mathematics";
+      case "CS":
+        return "Computer Science";
+      case "CTI":
+        return "CTI";
+      default:
+        break;
+    }
   }
-}
+};
 
 export const handleError = (error) => {
   if (error.response) {
@@ -723,10 +720,10 @@ export const handleError = (error) => {
     console.log("Error message:", data.message);
     // Update state with the error message for displaying on the sign-in page
   } else if (error.request) {
-      // The request was made but no response was received
-      console.log("No response received:", error.request);
+    // The request was made but no response was received
+    console.log("No response received:", error.request);
   } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log("Error:", error);
+    // Something happened in setting up the request that triggered an Error
+    console.log("Error:", error);
   }
-}
+};

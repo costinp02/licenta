@@ -23,9 +23,9 @@ export default function SignIn() {
 
     try {
       const res = await axiosInstance.post(`token/`, {
-            username: data.get("email"),
-            password: data.get("password"),
-          });
+        username: data.get("email"),
+        password: data.get("password"),
+      });
       localStorage.setItem("access_token", res.data.access);
       localStorage.setItem("refresh_token", res.data.refresh);
 
@@ -37,31 +37,31 @@ export default function SignIn() {
 
       // get decoded data
       const payloadObject = JSON.parse(decodedPayload);
-      const user_role = payloadObject.role
+      const user_role = payloadObject.role;
       const user_id = payloadObject.user_id;
       // console.log(`data: ${JSON.stringify(decodedPayload)}`);
       // console.log(`user id: ${payloadObject.user_id}`);
       // console.log(`role ${user_role}`);
 
-      switch(user_role) {
+      switch (user_role) {
         case "STUDENT":
           const result = await axiosInstance.get(`users/students/${user_id}/`, {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
-          })
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+          });
           localStorage.setItem("user_data", JSON.stringify(result.data));
-          navigate('/student', { replace: true});
+          navigate("/student", { replace: true });
           break;
         case "TEACHER":
-          navigate('/teacher', {replace: true});
+          navigate("/teacher", { replace: true });
           break;
         case "ADMIN":
-          navigate('/admin', {replace: true});
+          navigate("/admin", { replace: true });
           break;
         default:
           break;
       }
-
-
     } catch (error) {
       if (error.response) {
         // The request was made and the server responded with a status code
@@ -81,8 +81,7 @@ export default function SignIn() {
         console.log("Error:", error.message);
       }
     }
-  } 
-
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>

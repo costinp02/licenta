@@ -17,7 +17,7 @@ h2 {
   margin-bottom: 10px;
   border-bottom: 2px solid #ccc;
   padding-bottom: 10px;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 .container {
@@ -36,7 +36,10 @@ h2 {
   background-color: #f5f5f5;
   color: #333;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    transform 0.2s;
   margin: 5px;
   border-radius: 8px;
 }
@@ -53,9 +56,7 @@ h2 {
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-*/
-
-.schedule {
+*/ .schedule {
   width: 100%;
   border-collapse: collapse;
   margin-left: 150px;
@@ -70,7 +71,7 @@ h2 {
   font-size: 20px;
 }
 
-.schedule tbody{
+.schedule tbody {
   background-color: #f1efef;
 }
 .schedule th {
@@ -91,7 +92,6 @@ h2 {
   cursor: pointer;
   transition: background-color 0.3s;
   border-radius: 10px;
-
 }
 
 .schedule button:hover {
@@ -100,19 +100,19 @@ h2 {
 
 .student-data {
   display: flex;
-  align-items: center;  /* Centrarea orizontală a etichetelor */
+  align-items: center; /* Centrarea orizontală a etichetelor */
   justify-content: center;
-  padding: 20px;        
+  padding: 20px;
 }
 
 .student-data label {
   border: 1px solid #e0e0e0; /* Border opțional pentru a distinge div-ul */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Umbră opțională pentru estetică */
   font-family: Arial, sans-serif; /* Schimbarea fontului */
-  font-size: 16px;    /* Dimensiunea fontului */
-  margin-bottom: 10px;/* Adăugarea unei distanțe între etichete */
-  margin-left: 20px;       /* Adăugarea unui mic padding în jurul fiecărei etichete */
-  margin-right: 20px;       /* Adăugarea unui mic padding în jurul fiecărei etichete */
+  font-size: 16px; /* Dimensiunea fontului */
+  margin-bottom: 10px; /* Adăugarea unei distanțe între etichete */
+  margin-left: 20px; /* Adăugarea unui mic padding în jurul fiecărei etichete */
+  margin-right: 20px; /* Adăugarea unui mic padding în jurul fiecărei etichete */
   border-radius: 20px;
   padding: 5px;
 }
