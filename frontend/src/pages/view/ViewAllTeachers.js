@@ -33,7 +33,7 @@ export default function ViewAllTeachers() {
 
   useEffect(() => {
     fetchTeachers();
-  }, []);
+  }, [fetchTeachers]);
 
   const listTeachers = teachers.map((teacher) => (
     <div>

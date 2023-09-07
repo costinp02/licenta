@@ -65,7 +65,7 @@ export default function StudentEdit() {
 
   return (
     <>
-      <h2>Add Student</h2>
+      <h2>Edit Student</h2>
       <div className="form-container-student">
         <form onSubmit={handleSaveChanges}>
           {/* <div className="form-group">
@@ -143,7 +143,9 @@ export default function StudentEdit() {
               name="year"
               required
               value={student.year || ""}
-              onChange={(e) => setStudent({ ...student, year: e.target.value })}
+              onChange={(e) => 
+                setStudent({ ...student, year: e.target.value })
+              }
             />
           </div>
           <div className="form-group">

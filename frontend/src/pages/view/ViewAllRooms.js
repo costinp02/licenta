@@ -39,7 +39,7 @@ export default function ViewALLRooms() {
 
   useEffect(() => {
     fetchRooms();
-  }, []);
+  }, [fetchRooms]);
 
   const listRooms = classrooms.map((room) => (
     <div>

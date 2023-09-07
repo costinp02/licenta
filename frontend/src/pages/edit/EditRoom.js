@@ -20,7 +20,7 @@ export default function RoomEdit() {
     } catch (error) {
       handleError(error);
     }
-  }, []);
+  }, [id]);
 
   const updateRoom = useCallback(async () => {
     try {
@@ -33,11 +33,11 @@ export default function RoomEdit() {
     } catch (error) {
       handleError(error);
     }
-  });
+  },[id, room]);
 
   useEffect(() => {
     fetchRoom();
-  }, []);
+  }, [fetchRoom]);
 
   const handleSaveChanges = async (e) => {
     debugger;

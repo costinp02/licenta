@@ -19,6 +19,7 @@ export default function TeacherForm() {
       };
 
       const access_token = localStorage.getItem("access_token");
+      // eslint-disable-next-line
       const response = await axiosInstance.post(
         "/users/teachers/",
         teacherData,

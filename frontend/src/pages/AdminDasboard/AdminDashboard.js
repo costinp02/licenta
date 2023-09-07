@@ -1,9 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "./AdminDashboard.css";
 
 export default function AdminDashboard() {
-  const navigate = useNavigate();
   return (
     <>
       <div className="admin-home-container">

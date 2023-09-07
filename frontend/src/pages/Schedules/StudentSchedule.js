@@ -1,31 +1,18 @@
 import React from "react";
 import { scheduleCells } from "../../utils";
 import "./Schedule.css";
+import { handleProgram } from "../../utils";
 
 export default function StudentSchedule() {
-  const user = JSON.parse(localStorage.getItem("user_data"));
+  const student = JSON.parse(localStorage.getItem("user_data"));
 
-  const handleProgram = (user) => {
-    if (user) {
-      switch (user.program) {
-        case "MATH":
-          return "Mathematics";
-        case "CS":
-          return "Computer Science";
-        case "CTI":
-          return "CTI";
-        default:
-          break;
-      }
-    }
-  };
   return (
     <>
       <div className="student-data">
-        <label>{`${user.user.first_name} ${user.user.last_name}`}</label>
-        <label>{handleProgram(user)}</label>
-        <label>{`Year ${user.year}`}</label>
-        <label>{`Group ${user.group}`}</label>
+        <label>{`${student.user.first_name} ${student.user.last_name}`}</label>
+        <label>{handleProgram(student.program)}</label>
+        <label>{`Year ${student.year}`}</label>
+        <label>{`Group ${student.group}`}</label>
       </div>
 
       <table className="schedule">

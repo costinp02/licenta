@@ -696,9 +696,8 @@ export let rooms = [
   { id: 30, name: "Room 605", show: true },
 ];
 
-export const handleProgram = (user) => {
-  if (user) {
-    switch (user.program) {
+export const handleProgram = (program) => {
+    switch (program) {
       case "MATH":
         return "Mathematics";
       case "CS":
@@ -707,7 +706,7 @@ export const handleProgram = (user) => {
         return "CTI";
       default:
         break;
-    }
+    
   }
 };
 

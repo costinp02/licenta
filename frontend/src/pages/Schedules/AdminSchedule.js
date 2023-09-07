@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { ScheduleCell } from "../../components/ScheduleCell";
-import { scheduleCells, collegePrograms } from "../../utils";
+import { scheduleCells, collegePrograms, handleError } from "../../utils";
 
 import "./Schedule.css";
 import Select from "react-select";
@@ -53,26 +53,10 @@ export default function AdminSchedule() {
       response.data.forEach((room) => {
         room.show = true;
       });
-      // debugger;
       setClassrooms(response.data);
-
-      // console.log(classrooms);
     } catch (error) {
       debugger;
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        const { status, data } = error.response;
-        console.log("Error status:", status);
-        console.log("Error message:", data.message);
-        // Update state with the error message for displaying on the sign-in page
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.log("No response received:", error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log("Error:", error);
-      }
+      handleError(error);
     }
   }, []);
 
@@ -84,30 +68,17 @@ export default function AdminSchedule() {
       });
       setCourses(result.data);
     } catch (error) {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        const { status, data } = error.response;
-        console.log("Error status:", status);
-        console.log("Error message:", data.message);
-        // Update state with the error message for displaying on the sign-in page
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.log("No response received:", error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log("Error:", error.message);
-      }
+      handleError(error);
     }
   }, []);
 
   useEffect(() => {
     fetchRooms();
-  }, []);
+  }, [fetchRooms]);
 
   useEffect(() => {
     fetchCourses();
-  }, []);
+  }, [fetchCourses]);
 
   useEffect(() => {
     const filteredCourses = courses.filter(
@@ -122,7 +93,7 @@ export default function AdminSchedule() {
     // Update your state with filteredCourses
     setFilteredCourses(filteredCourses);
     setFilteredRooms(filteredRooms);
-  }, [courses, selectedProgram, selectedYear]);
+  }, [courses,classrooms, selectedProgram, selectedYear]);
 
   console.log(`Courses: ${JSON.stringify(selectedCourses, null, 2)}`);
   console.log(`Rooms: ${JSON.stringify(selectedRooms, null, 2)}`);
@@ -187,8 +158,8 @@ export default function AdminSchedule() {
         styles={{
           menu: (baseStyles) => ({
             ...baseStyles.menu,
-            whiteSpace: "normal", // Allow text to wrap within the option
-            lineHeight: "1.2", // Adjust line height for better readability
+            whiteSpace: "normal",
+            lineHeight: "1.2", 
             position: "absolute",
           }),
 
@@ -345,9 +316,7 @@ export default function AdminSchedule() {
       <div>
         <button
           onClick={() => {
-            debugger;
-            console.log(`fetched rooms: ${JSON.stringify(classrooms)}`);
-            console.log(`fetched courses: ${JSON.stringify(courses)}`);
+
           }}
         >
           Save changes

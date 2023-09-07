@@ -32,7 +32,7 @@ export default function ViewAllCourses() {
 
   useEffect(() => {
     fetchCourses();
-  }, []);
+  }, [fetchCourses]);
 
   const listCourses = courses.map((course) => (
     <div>
@@ -51,7 +51,7 @@ export default function ViewAllCourses() {
       <p>
         <b>{`Year: ${course.year}`}</b>
       </p>
-      <a href={`/admin/course-edit/${course.id}`} className="btn">
+      <a href={`/admin/course-form/edit/${course.id}`} className="btn">
         Edit
       </a>
     </div>

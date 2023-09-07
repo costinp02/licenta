@@ -126,41 +126,49 @@ teacher_list_create_view = TeacherListCreateAPIView.as_view()
 
 
 class TeacherDetailAPIView(generics.RetrieveAPIView):
-    queryset = Teacher.objects.all()
     serializer_class = TeacherRegisterSerializer
-    lookup_field = 'pk'
-    # authentication_classes = [authentication.SessionAuthentication]
+    lookup_field = 'user__id'
+    lookup_url_kwarg = 'user_id'
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        return Teacher.objects.filter(user__id=self.kwargs['user_id'])
 
 teacher_detail_view = TeacherDetailAPIView.as_view()
 
 
 class TeacherUpdateAPIView(generics.RetrieveUpdateAPIView):
-    queryset = Teacher.objects.all()
     serializer_class = TeacherEditSerializer
-    lookup_field = 'pk'
-    # authentication_classes = [authentication.SessionAuthentication]
+    lookup_field = 'user__id'
+    lookup_url_kwarg = 'user_id'
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        return Teacher.objects.filter(user__id=self.kwargs['user_id'])
 
 teacher_update_view = TeacherUpdateAPIView.as_view()
 
 
 class TeacherPatchAPIView(generics.RetrieveUpdateAPIView):
-    queryset = Teacher.objects.all()
     serializer_class = TeacherEditSerializer
-    lookup_field = 'pk'
-    # authentication_classes = [authentication.SessionAuthentication]
+    lookup_field = 'user__id'
+    lookup_url_kwarg = 'user_id'
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        return Teacher.objects.filter(user__id=self.kwargs['user_id'])
 
 teacher_patch_view = TeacherPatchAPIView.as_view()
 
 
 class TeacherDestroyAPIView(generics.RetrieveDestroyAPIView):
-    queryset = Teacher.objects.all()
     serializer_class = TeacherRegisterSerializer
-    lookup_field = 'pk'
-    # authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.IsAdminUser]
+    lookup_field = 'user__id'
+    lookup_url_kwarg = 'user_id'
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        return Teacher.objects.filter(user__id=self.kwargs['user_id'])
 
 teacher_destroy_view = TeacherDestroyAPIView.as_view()
 

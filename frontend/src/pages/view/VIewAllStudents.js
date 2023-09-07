@@ -34,7 +34,7 @@ export default function ViewAllStudents() {
 
   useEffect(() => {
     fetchStudents();
-  }, []);
+  }, [fetchStudents]);
 
   const listStudents = students.map((student) => (
     <div>
@@ -43,7 +43,7 @@ export default function ViewAllStudents() {
       </p>
 
       <p>
-        <b>{`Program: ${student.program}  `}</b>
+        <b>{`Program: ${handleProgram(student.program)}`}</b>
       </p>
 
       <p>

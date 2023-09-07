@@ -14,8 +14,8 @@ urlpatterns = [
     path('students/<int:user_id>/patch/', views.student_patch_view, name='student-patch'),
     path('students/<int:user_id>/delete/', views.student_destroy_view, name='student-delete'),
     path('teachers/', views.teacher_list_create_view, name='teachers-list'),
-    path('teachers/<int:pk>/', views.teacher_detail_view, name='teachers-detail'),
-    path('teachers/<int:pk>/update/', views.teacher_update_view, name='teachers-update'),
-    path('teachers/<int:pk>/patch/', views.teacher_patch_view, name='teachers-patch'),
-    path('teachers/<int:pk>/delete/', views.teacher_destroy_view, name='teachers-delete'),
+    path('teachers/<int:user_id>/', views.teacher_detail_view, name='teachers-detail'),
+    path('teachers/<int:user_id>/update/', views.teacher_update_view, name='teachers-update'),
+    path('teachers/<int:user_id>/patch/', views.teacher_patch_view, name='teachers-patch'),
+    path('teachers/<int:user_id>/delete/', views.teacher_destroy_view, name='teachers-delete'),
 ]

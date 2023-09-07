@@ -21,6 +21,7 @@ export default function StudentForm() {
       };
 
       const access_token = localStorage.getItem("access_token");
+      // eslint-disable-next-line
       const response = await axiosInstance.post(
         "/users/students/",
         studentData,

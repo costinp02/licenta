@@ -20,6 +20,7 @@ export default function CourseForm() {
 
       const access_token = localStorage.getItem("access_token");
       // debugger;
+      // eslint-disable-next-line
       const response = await axiosInstance.post(
         "/courses/create/",
         courseData,
@@ -92,8 +93,3 @@ export default function CourseForm() {
   );
 }
 
-// function handleProgram (program) {
-//     switch (program){
-//         case:
-//     }
-// }

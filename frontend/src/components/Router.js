@@ -17,6 +17,8 @@ import ViewAllTeachers from "../pages/view/ViewAllTeachers";
 import ViewAllCourses from "../pages/view/ViewAllCourses";
 import RoomEdit from "../pages/edit/EditRoom";
 import StudentEdit from "../pages/edit/EditStudent";
+import TeacherEdit from "../pages/edit/EditTeacher";
+import CourseEdit from "../pages/edit/EditCourse";
 
 function ProtectedRoute({ children }) {
   const isLoggedIn =
@@ -159,7 +161,25 @@ export default function Router() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/admin/teacher-form/edit/:id"
+            element={
+              <ProtectedRoute>
+                <TeacherEdit />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/course-form/edit/:id"
+            element={
+              <ProtectedRoute>
+                <CourseEdit />
+              </ProtectedRoute>
+            }
+          />
+
         </Route>
+        
       </Routes>
     </BrowserRouter>
   );
