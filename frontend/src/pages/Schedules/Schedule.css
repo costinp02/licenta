@@ -97,3 +97,22 @@ h2 {
 .schedule button:hover {
   background-color: #981c29;
 }
+
+.student-data {
+  display: flex;
+  align-items: center;  /* Centrarea orizontală a etichetelor */
+  justify-content: center;
+  padding: 20px;        
+}
+
+.student-data label {
+  border: 1px solid #e0e0e0; /* Border opțional pentru a distinge div-ul */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Umbră opțională pentru estetică */
+  font-family: Arial, sans-serif; /* Schimbarea fontului */
+  font-size: 16px;    /* Dimensiunea fontului */
+  margin-bottom: 10px;/* Adăugarea unei distanțe între etichete */
+  margin-left: 20px;       /* Adăugarea unui mic padding în jurul fiecărei etichete */
+  margin-right: 20px;       /* Adăugarea unui mic padding în jurul fiecărei etichete */
+  border-radius: 20px;
+  padding: 5px;
+}

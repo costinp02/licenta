@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { ScheduleCell } from "../../components/ScheduleCell";
-import { rooms, scheduleCells, collegePrograms } from "../../utils";
+import { scheduleCells, collegePrograms } from "../../utils";
 
 import "./Schedule.css";
 import  Select from "react-select";
@@ -275,8 +275,11 @@ export default function AdminSchedule() {
             <th>{dayData.day}</th>
             {dayData.cells.map((cell) => (
               <td key={cell.interval}>
+                {/* If course and room are selected for this interval */}
                 {selectedCourses[selectedProgram]?.[selectedYear]?.[`${dayData.day}-${cell.interval}`] && 
-                selectedRooms[selectedProgram]?.[selectedYear]?.[`${dayData.day}-${cell.interval}`] ? (
+                selectedRooms[selectedProgram]?.[selectedYear]?.[`${dayData.day}-${cell.interval}`] ? 
+                // Then show selected coruse and room data
+                (
                   <div>
                     <div>
                       {selectedCourses[selectedProgram][selectedYear][`${dayData.day}-${cell.interval}`].name}
@@ -304,7 +307,9 @@ export default function AdminSchedule() {
                       Remove
                     </button>
                   </div>
-                ) : (
+                ) :
+                // Else show the dropdonw menus 
+                (
                   <ScheduleCell
                       dayData={dayData}
                       cell={cell}

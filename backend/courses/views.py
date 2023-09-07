@@ -2,13 +2,19 @@ from rest_framework import generics,permissions
 from api.permissions import IsTeacherPermission
 
 from .models import Course
-from .serializers import CourseSerializer
+from .serializers import CourseSerializer, CourseCreateSerializer
 
 class CourseListCreateAPIView(generics.ListCreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
 course_list_create_view  = CourseListCreateAPIView.as_view()
+
+class CourseCreateAPIView(generics.ListCreateAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseCreateSerializer
+
+course_create_view = CourseCreateAPIView.as_view()
     
 
 class CourseDetailAPIView(generics.RetrieveAPIView):

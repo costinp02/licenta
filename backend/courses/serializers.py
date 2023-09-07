@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
 from .models import Course
-from users.serializers import TeacherEditSerializer
+from users.models import User, Teacher
+from users.serializers import TeacherEditSerializer, TeacherOnlyIDSerializer
 
 class CourseSerializer(serializers.ModelSerializer):
     teacher = TeacherEditSerializer()
@@ -18,7 +19,21 @@ class CourseSerializer(serializers.ModelSerializer):
             'year'
         ]
 
-class CourseOnlyIDSerializer(serializers.ModelSerializer):
+
+class CourseCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ['id']
+        fields  = [
+            'id',
+            'name',
+            'course_type',
+            'teacher',
+            'credit_number',
+            'optional',
+            'program',
+            'year'
+        ]
+
+        
+
+    

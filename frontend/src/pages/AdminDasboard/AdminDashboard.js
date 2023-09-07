@@ -16,10 +16,10 @@ export default function AdminDashboard() {
                 <a className="admin-button" href="/admin/room-form">Add Room</a>
             </div>
             <div className="admin-buttons-column">
-                <a className="admin-button" href="edit_student.html">Edit Student</a>
-                <a className="admin-button" href="edit_teacher.html">Edit Teacher</a>
-                <a className="admin-button" href="edit_course.html">Edit Course</a>
-                <a className="admin-button" href="edit_room.html">Edit Room</a>
+                <a className="admin-button" href="/admin/students-view">Edit Student</a>
+                <a className="admin-button" href="/admin/teachers-view">Edit Teacher</a>
+                <a className="admin-button" href="/admin/courses-view">Edit Course</a>
+                <a className="admin-button" href="/admin/rooms-view">Edit Room</a>
             </div>
         </div>
         <div className="last-button">

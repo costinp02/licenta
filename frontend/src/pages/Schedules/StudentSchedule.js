@@ -3,13 +3,30 @@ import { scheduleCells } from "../../utils";
 import "./Schedule.css";
 
 export default function StudentSchedule() {
+    const user = JSON.parse(localStorage.getItem("user_data"));
+
+    const handleProgram = (user) => {
+        if( user ) {
+            switch (user.program){
+                case "MATH":
+                    return "Mathematics";
+                case "CS":
+                    return "Computer Science";
+                case "CTI":
+                    return "CTI";
+                default:
+                    break;
+            }
+            
+        }
+    }
     return (
         <>
             <div className="student-data">
-                <h4>User name</h4>
-                <h4>User program</h4>
-                <h4>User year</h4>
-                <h4>User group</h4>
+                <label>{`${user.user.first_name} ${user.user.last_name}`}</label>
+                <label>{handleProgram(user)}</label>
+                <label>{`Year ${user.year}`}</label>
+                <label>{`Group ${user.group}`}</label>
             </div>
 
             <table className="schedule">
@@ -31,7 +48,10 @@ export default function StudentSchedule() {
                             <th>{dayData.day}</th>
                             {dayData.cells.map((cell) => (
                             <td key={cell.interval}>
-                                <div>hello</div>
+                                <div>{cell.courses.name}</div>
+                                <div>{cell.courses.teacher_name}</div>
+                                <div>{cell.courses.course_type}</div>
+                                <div>{cell.courses.room}</div>
                             </td>
                         ))}
                         </tr>

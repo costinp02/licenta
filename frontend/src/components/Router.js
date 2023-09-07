@@ -11,6 +11,10 @@ import CourseForm from "../pages/forms/course/CourseForm";
 import RoomForm from "../pages/forms/room/RoomForm";
 import StudentForm from "../pages/forms/student/StudentForm";
 import TeacherForm from "../pages/forms/teacher/TeacherForm";
+import ViewALLRooms from "../pages/view/ViewAllRooms";
+import ViewAllStudents from "../pages/view/VIewAllStudents";
+import ViewAllTeachers from "../pages/view/ViewAllTeachers";
+import ViewAllCourses from "../pages/view/ViewAllCourses";
 
 function ProtectedRoute({ children }) {
   const isLoggedIn = localStorage.getItem('access_token') && localStorage.getItem('refresh_token');
@@ -39,14 +43,18 @@ export default function Router() {
           {/*Children Routes */}
           <Route path="/" element={<SignIn />} />
           <Route path="/contact-us" element={<Contact />} />
-          <Route path="/student" element={<ProtectedRoute><StudentSchedule /></ProtectedRoute>} />
-          <Route path="/teacher" element={<ProtectedRoute><TeacherSchedule /></ProtectedRoute>} />
-          <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/admin/schedule" element={<ProtectedRoute><AdminSchedule /></ProtectedRoute>} />
-          <Route path="/admin/course-form" element={<ProtectedRoute><CourseForm /></ProtectedRoute>} />
-          <Route path="/admin/room-form" element={<ProtectedRoute><RoomForm /></ProtectedRoute>} />
-          <Route path="/admin/student-form" element={<ProtectedRoute><StudentForm /></ProtectedRoute>} />
-          <Route path="/admin/teacher-form" element={<ProtectedRoute><TeacherForm /></ProtectedRoute>} />
+          <Route path="/student" element={<ProtectedRoute>< StudentSchedule /></ProtectedRoute>} />
+          <Route path="/teacher" element={<ProtectedRoute>< TeacherSchedule /></ProtectedRoute>} />
+          <Route path="/admin" element={<ProtectedRoute>< AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin/schedule" element={<ProtectedRoute>< AdminSchedule /></ProtectedRoute>} />
+          <Route path="/admin/course-form" element={<ProtectedRoute>< CourseForm /></ProtectedRoute>} />
+          <Route path="/admin/room-form" element={<ProtectedRoute>< RoomForm /></ProtectedRoute>} />
+          <Route path="/admin/student-form" element={<ProtectedRoute>< StudentForm /></ProtectedRoute>} />
+          <Route path="/admin/teacher-form" element={<ProtectedRoute>< TeacherForm /></ProtectedRoute>} />
+          <Route path="/admin/rooms-view" element={<ProtectedRoute>< ViewALLRooms /></ProtectedRoute>} />
+          <Route path="/admin/students-view" element={<ProtectedRoute>< ViewAllStudents /></ProtectedRoute>} />
+          <Route path="/admin/teachers-view" element={<ProtectedRoute>< ViewAllTeachers /></ProtectedRoute>} />
+          <Route path="/admin/courses-view" element={<ProtectedRoute>< ViewAllCourses /></ProtectedRoute>} />
         </Route>
       </Routes>
     </BrowserRouter>

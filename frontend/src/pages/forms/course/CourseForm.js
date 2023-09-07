@@ -11,7 +11,7 @@ export default function CourseForm () {
             const courseData = {
                 name: data.get("name"),
                 course_type: data.get("course_type"),
-                teacher_id: data.get("teacher_id"),  
+                teacher: data.get("teacher_id"),
                 credit_number: data.get("credit_number"),
                 optional: data.get("optional"),
                 program: data.get("program"),
@@ -21,16 +21,17 @@ export default function CourseForm () {
             };
             console.log(courseData)
 
-            // const access_token = localStorage.getItem('access_token');
-            // const response = await axiosInstance.post('/users/teachers/', courseData, {
-            //     headers: {
-            //         'Authorization': `Bearer ${access_token}`
-            //     }
-            // });
-            // alert(`Teacher created succesfuly!`);
+            const access_token = localStorage.getItem('access_token');
+            // debugger;
+            const response = await axiosInstance.post('/courses/create/', courseData, {
+                headers: {
+                    'Authorization': `Bearer ${access_token}`
+                }
+            });
+            alert(`Course created succesfuly!`);
         } catch (error) {
             alert(`Something went wrong, check the data and try again.`);
-            console.error("Error submitting form:", error);
+            console.error("Error submitting form:", error.response.data);
         }
     }
 
@@ -46,9 +47,9 @@ export default function CourseForm () {
                     <div className="form-group">
                         <label htmlFor="course_type">Course Type:</label>
                         <select id="course_type" name="course_type">
-                            <option value="Lecture">Lecture</option>
-                            <option value="Seminar">Seminar</option>
-                            <option value="Laboratory">Laboratory</option>
+                            <option value="LECTURE">Lecture</option>
+                            <option value="SEMINAR">Seminar</option>
+                            <option value="LABORATORY">Laboratory</option>
                         </select>
                     </div>
                     <div className="form-group">
@@ -69,8 +70,8 @@ export default function CourseForm () {
                     <div className="form-group">
                         <label htmlFor="program">Program:</label>
                         <select id="program" name="program">
-                            <option value="Computer Science">Computer Science</option>
-                            <option value="Mathematics">Mathematics</option>
+                            <option value="CS">Computer Science</option>
+                            <option value="MATH">Mathematics</option>
                             <option value="CTI">CTI</option>
                         </select>
                     </div>
@@ -86,3 +87,9 @@ export default function CourseForm () {
         
     
 }
+
+// function handleProgram (program) {
+//     switch (program){
+//         case:
+//     }
+// }

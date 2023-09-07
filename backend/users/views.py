@@ -67,40 +67,48 @@ class StudentListCreateAPIView(generics.ListCreateAPIView):
 student_list_create_view = StudentListCreateAPIView.as_view()
 
 class StudentDetailAPIView(generics.RetrieveAPIView):
-    queryset = Student.objects.all()
     serializer_class = StudentRegisterSerializer
-    lookup_field = 'pk'
-    # authentication_classes = [authentication.SessionAuthentication]
+    lookup_field = 'user__id'
+    lookup_url_kwarg = 'user_id'
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        return Student.objects.filter(user__id=self.kwargs['user_id'])
 
 student_detail_view = StudentDetailAPIView.as_view()
 
 class StudentUpdateAPIView(generics.RetrieveUpdateAPIView):
-    queryset = Student.objects.all()
     serializer_class = StudentEditSerializer
-    lookup_field = 'pk'
-    # authentication_classes = [authentication.SessionAuthentication]
+    lookup_field = 'user__id'
+    lookup_url_kwarg = 'user_id'
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        return Student.objects.filter(user__id=self.kwargs['user_id'])
 
 student_update_view = StudentUpdateAPIView.as_view()
 
 
 class StudentPatchAPIView(generics.RetrieveUpdateAPIView):
-    queryset = Student.objects.all()
     serializer_class = StudentEditSerializer
-    lookup_field = 'pk'
-    # authentication_classes = [authentication.SessionAuthentication]
+    lookup_field = 'user__id'
+    lookup_url_kwarg = 'user_id'
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        return Student.objects.filter(user__id=self.kwargs['user_id'])
 
 student_patch_view = StudentPatchAPIView.as_view()
 
 
 class StudentDestroyAPIView(generics.RetrieveDestroyAPIView):
-    queryset = Student.objects.all()
     serializer_class = StudentRegisterSerializer
-    lookup_field = 'pk'
-    # authentication_classes = [authentication.SessionAuthentication]
+    lookup_field = 'user__id'
+    lookup_url_kwarg = 'user_id'
     permission_classes = [permissions.IsAdminUser]
+
+    def get_queryset(self):
+        return Student.objects.filter(user__id=self.kwargs['user_id'])
 
 student_destroy_view = StudentDestroyAPIView.as_view()
 
@@ -112,7 +120,6 @@ TEACHER VIEWS
 class TeacherListCreateAPIView(generics.ListCreateAPIView):
     queryset = Teacher.objects.all()
     serializer_class = TeacherRegisterSerializer
-    # authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
  
 teacher_list_create_view = TeacherListCreateAPIView.as_view()

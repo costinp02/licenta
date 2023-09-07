@@ -3,10 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -15,77 +11,78 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../axios";
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
 
-    axiosInstance
-      .post(`token/`, {
-        username: data.get("email"),
-        password: data.get("password"),
-      })
-      .then((res) => {
-        localStorage.setItem("access_token", res.data.access);
-        localStorage.setItem("refresh_token", res.data.refresh);
-        axiosInstance.defaults.headers["Authorization"] =
-          "JWT " + localStorage.getItem("access_token");
-        const token = res.data.access;
-        const tokenParts = token.split(".");
-        const encodedPayload = tokenParts[1];
+    try {
+      const res = await axiosInstance.post(`token/`, {
+            username: data.get("email"),
+            password: data.get("password"),
+          });
+      localStorage.setItem("access_token", res.data.access);
+      localStorage.setItem("refresh_token", res.data.refresh);
 
-        const decodedPayload = atob(encodedPayload);
-        const payloadObject = JSON.parse(decodedPayload);
-        const user_role = payloadObject.role
-        console.log(`data: ${JSON.stringify(decodedPayload)}`);
-        console.log(`user id: ${payloadObject.user_id}`);
-        console.log(`role ${user_role}`);
-        switch(user_role) {
-          case "STUDENT":
-            navigate('/student', {replace: true});
-            break;
-          case "TEACHER":
-            navigate('/teacher', {replace: true});
-            break;
-          case "ADMIN":
-            navigate('/admin', {replace: true});
-            break;
-        }
+      //decode token payload
+      const token = res.data.access;
+      const tokenParts = token.split(".");
+      const encodedPayload = tokenParts[1];
+      const decodedPayload = atob(encodedPayload);
 
-        
+      // get decoded data
+      const payloadObject = JSON.parse(decodedPayload);
+      const user_role = payloadObject.role
+      const user_id = payloadObject.user_id;
+      // console.log(`data: ${JSON.stringify(decodedPayload)}`);
+      // console.log(`user id: ${payloadObject.user_id}`);
+      // console.log(`role ${user_role}`);
 
-        // now do a get request with the user id:
+      switch(user_role) {
+        case "STUDENT":
+          const result = await axiosInstance.get(`users/students/${user_id}/`, {
+            headers: { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
+          })
+          localStorage.setItem("user_data", JSON.stringify(result.data));
+          navigate('/student', { replace: true});
+          break;
+        case "TEACHER":
+          navigate('/teacher', {replace: true});
+          break;
+        case "ADMIN":
+          navigate('/admin', {replace: true});
+          break;
+        default:
+          break;
+      }
 
-        // navigate("/admin");
-        console.log(res);
-        console.log(res.data);
-      })
-      .catch((error) => {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          const { status, data } = error.response;
-          console.log("Error status:", status);
-          console.log("Error message:", data.message);
-          alert("Please use a valid email and password");
-          event.target.elements.email.value = "";
-          event.target.elements.password.value = "";
-          // Update state with the error message for displaying on the sign-in page
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.log("No response received:", error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log("Error:", error.message);
-        }
-      });
-  };
+
+    } catch (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        const { status, data } = error.response;
+        console.log("Error status:", status);
+        console.log("Error message:", data.message);
+        alert("Please use a valid email and password");
+        event.target.elements.email.value = "";
+        event.target.elements.password.value = "";
+        // Update state with the error message for displaying on the sign-in page
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log("No response received:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Error:", error.message);
+      }
+    }
+  } 
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -131,12 +128,7 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
-              // href="/home"
               type="submit"
               fullWidth
               variant="contained"
@@ -144,16 +136,8 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            {/* <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-            </Grid> */}
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );

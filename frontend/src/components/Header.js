@@ -13,6 +13,10 @@ export default function Header(props) {
     e.preventDefault();
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    if(localStorage.getItem('user_data')){
+      localStorage.removeItem('user_data');
+    }
+    
 
 
     navigate('/', { replace: true });

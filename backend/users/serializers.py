@@ -178,3 +178,10 @@ class TeacherEditSerializer(serializers.ModelSerializer):
         # print(instance.user.password)
 
         return instance
+    
+class TeacherOnlyIDSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Teacher
+        fields = [
+            'id'
+        ]

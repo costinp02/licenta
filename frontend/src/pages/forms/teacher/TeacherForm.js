@@ -29,7 +29,7 @@ export default function TeacherForm () {
             alert(`Teacher created succesfuly!`);
         } catch (error) {
             alert(`Something went wrong, check the data and try again.`);
-            console.error("Error submitting form:", error);
+            console.error("Error submitting form:", error.response.data);
         }
     }
 
