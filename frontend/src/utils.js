@@ -18,47 +18,27 @@ export let scheduleCells = [
     cells: [
       {
         interval: "8-10",
-        courses: {
-          name: "POO",
-          teacher_name: "I. Popescu",
-          course_type: "Lecture",
-          room: "Room 105",
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "10-12",
-        courses: {
-          name: "Web Development Fundamentals",
-          teacher_name: "P. Ionescu",
-          course_type: "Lecture",
-          room: "Room 105",
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "12-14",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "14-16",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "16-18",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "18-20",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
     ],
   },
@@ -68,47 +48,27 @@ export let scheduleCells = [
     cells: [
       {
         interval: "8-10",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "10-12",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "12-14",
-        courses: {
-          name: "Introduction to Programming with Python",
-          teacher_name: "E. Stanescu",
-          course_type: "Lecture",
-          room: "Room 215",
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "14-16",
-        courses: {
-          name: "Introduction to Programming with Python",
-          teacher_name: "P. Iancu",
-          course_type: "Seminar",
-          room: "Room 302",
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "16-18",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "18-20",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
     ],
   },
@@ -117,47 +77,27 @@ export let scheduleCells = [
     cells: [
       {
         interval: "8-10",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "10-12",
-        courses: {
-          name: "Web Development Fundamentals",
-          teacher_name: "T. Bratosin",
-          course_type: "Laboratory",
-          room: "Room 216",
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "12-14",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "14-16",
-        courses: {
-          //course data for selected courses
-          name: "POO",
-          teacher_name: "D. Pop",
-          course_type: "Laboratory",
-          room: "Room 121",
-        },
+        courses: []
       },
       {
         interval: "16-18",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "18-20",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
     ],
   },
@@ -167,39 +107,27 @@ export let scheduleCells = [
     cells: [
       {
         interval: "8-10",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "10-12",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "12-14",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "14-16",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "16-18",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "18-20",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
     ],
   },
@@ -209,39 +137,27 @@ export let scheduleCells = [
     cells: [
       {
         interval: "8-10",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "10-12",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "12-14",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "14-16",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "16-18",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
       {
         interval: "18-20",
-        courses: {
-          //course data for selected courses
-        },
+        courses: []
       },
     ],
   },

@@ -11,6 +11,7 @@ export default function ViewAllCourses() {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
       });
+
       setCourses(response.data);
     } catch (error) {
       if (error.response) {
@@ -35,7 +36,7 @@ export default function ViewAllCourses() {
   }, [fetchCourses]);
 
   const listCourses = courses.map((course) => (
-    <div>
+    <div key={course.id}>
       <p>
         <b>{`Name: ${course.name}`}</b>
       </p>

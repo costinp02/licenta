@@ -44,7 +44,6 @@ axiosInstance.interceptors.response.use(
       error.response.status === 401 &&
       error.response.statusText === "Unauthorized"
     ) {
-      debugger;
       const refreshToken = localStorage.getItem("refresh_token");
 
       if (refreshToken && refreshToken !== "undefined") {

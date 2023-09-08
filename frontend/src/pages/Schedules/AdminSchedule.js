@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { ScheduleCell } from "../../components/ScheduleCell";
 import { scheduleCells, collegePrograms, handleError } from "../../utils";
-
 import "./Schedule.css";
 import Select from "react-select";
 import axiosInstance from "../../axios";
@@ -11,35 +10,15 @@ export default function AdminSchedule() {
   const [selectedYear, setSelectedYear] = useState(1);
   const [selectedCourses, setSelectedCourses] = useState({});
   const [selectedRooms, setSelectedRooms] = useState({});
+
   const [classrooms, setClassrooms] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [filteredCourses, setFilteredCourses] = useState([]);
-  const [filteredRooms, setFilteredRooms] = useState([]);
 
-  axiosInstance.interceptors.request.use(
-    (config) => {
-      config.headers.Authorization = `Bearer ${localStorage.getItem(
-        "access_token",
-      )}`;
-      return config;
-    },
-    (error) => {
-      console.log("error");
-    },
-  );
+  const [visibleCourses, setVisibleCourses] = useState([]);
+  const [visibleRooms, setVisibleRooms] = useState([]);
 
-  axiosInstance.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    async (error) => {
-      if (error) {
-        console.log(` eroare ${error}`);
-        // Handle token expiration here
-      }
-      return Promise.reject(error);
-    },
-  );
+  const [schedule, setSchedule] = useState({});
+
 
   const fetchRooms = useCallback(async () => {
     try {
@@ -62,7 +41,11 @@ export default function AdminSchedule() {
 
   const fetchCourses = useCallback(async () => {
     try {
-      const result = await axiosInstance.get("/courses/");
+      const result = await axiosInstance.get("/courses/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
       result.data.forEach((course) => {
         course.show = true;
       });
@@ -81,7 +64,7 @@ export default function AdminSchedule() {
   }, [fetchCourses]);
 
   useEffect(() => {
-    const filteredCourses = courses.filter(
+    const visibleCourses = courses.filter(
       (course) =>
         course.program === selectedProgram &&
         course.year === selectedYear &&
@@ -90,38 +73,71 @@ export default function AdminSchedule() {
 
     const filteredRooms = classrooms.filter((room) => room.show === true);
 
-    // Update your state with filteredCourses
-    setFilteredCourses(filteredCourses);
-    setFilteredRooms(filteredRooms);
+    setVisibleCourses(visibleCourses);
+    setVisibleRooms(filteredRooms);
   }, [courses,classrooms, selectedProgram, selectedYear]);
 
-  console.log(`Courses: ${JSON.stringify(selectedCourses, null, 2)}`);
-  console.log(`Rooms: ${JSON.stringify(selectedRooms, null, 2)}`);
+  // console.log(`Courses: ${JSON.stringify(selectedCourses, null, 2)}`);
+  // console.log(`Rooms: ${JSON.stringify(selectedRooms, null, 2)}`);
 
   const handleCourseChange = (day, interval, courseId) => {
-    // debugger;
-    const courseKey = `${day}-${interval}`;
-    if (selectedCourses[selectedProgram]?.[selectedYear]?.[courseKey]) {
-      selectedCourses[selectedProgram][selectedYear][courseKey].show = true;
+    const mapKey = `${day}-${interval}`;
+    if (selectedCourses[selectedProgram]?.[selectedYear]?.[mapKey]) {
+      selectedCourses[selectedProgram][selectedYear][mapKey].show = true;
     }
 
-    filteredCourses.find((course) => course.id === courseId).show = false;
-  };
+    const updatedVisibleCourses = visibleCourses.map((course) => {
+      if(course.id === courseId){
+        return {...course, show: false};
+      }
+      return course;
+    })
+    setVisibleCourses(updatedVisibleCourses);
 
-  const handleRoomChange = (day, interval, roomId) => {
-    const roomKey = `${day}-${interval}`;
-    if (selectedRooms[selectedProgram]?.[selectedYear]?.[roomKey]) {
-      selectedRooms[selectedProgram][selectedYear][roomKey].show = true;
-    }
     // debugger;
-    filteredRooms.find((room) => room.id === roomId).show = false;
+    
+
+    if(selectedRooms[selectedProgram]?.[selectedYear]?.[mapKey]){
+      const roomId = selectedRooms[selectedProgram]?.[selectedYear]?.[mapKey].id;
+      updateSchedule(day, interval, courseId, roomId)
+    }
   };
 
-  const handleRemoveCourseAndRoom2 = (day, interval) => {
+  const handleClassroomChange = (day, interval, roomId) => {
+    const mapKey = `${day}-${interval}`;
+
+    if(selectedCourses[selectedProgram]?.[selectedYear]?.[mapKey]){
+      const courseId = selectedCourses[selectedProgram]?.[selectedYear]?.[mapKey].id;
+      updateSchedule(day, interval, courseId, roomId);
+    }
+  }
+
+  const updateSchedule = (day, interval, courseId, roomId) => {
+    const updatedSchedule = {...schedule};
+    if(!updatedSchedule[day]) updatedSchedule[day]= {};
+    if(!updatedSchedule[day][interval]) updatedSchedule[day][interval] = [];
+    updatedSchedule[day][interval].push({
+      courseId: courses.find((course) => course.id === courseId).id,
+      teacherId: courses.find((course) => course.id === courseId).teacher.user.id,
+      roomId: classrooms.find((room) => room.id === roomId ).id
+    });
+
+    setSchedule(updatedSchedule);
+  }
+
+
+  const handleRemoveCourseAndRoom = (day, interval) => {
     // debugger;
     const mapKey = `${day}-${interval}`;
-    selectedCourses[selectedProgram][selectedYear][mapKey].show = true;
-    selectedRooms[selectedProgram][selectedYear][mapKey].show = true;
+    const courseId = selectedCourses[selectedProgram][selectedYear][mapKey]?.id;
+    const roomId = selectedRooms[selectedProgram][selectedYear][mapKey]?.id;
+
+    if (courseId) {
+      const updatedCourses = visibleCourses.map(course => 
+        course.id === courseId ? { ...course, show: true } : course
+      );
+      setVisibleCourses(updatedCourses);
+    }
     const newSelectedCourses = {
       ...selectedCourses,
       [selectedProgram]: {
@@ -147,7 +163,46 @@ export default function AdminSchedule() {
 
     delete newSelectedRooms[selectedProgram][selectedYear][mapKey];
     setSelectedRooms(newSelectedRooms);
+
+    debugger;
+    removeFromSchedule(day, interval, courseId, roomId);
   };
+
+  const removeFromSchedule = (day, interval, courseId, roomId) => {
+    const updatedSchedule = {...schedule};
+
+    if(updatedSchedule[day] && updatedSchedule[day][interval]){
+      const index = updatedSchedule[day][interval].findIndex(item => item.courseId === courseId && item.roomId === roomId);
+
+      if(index !== -1) {
+        updatedSchedule[day][interval].splice(index, 1);
+      }
+    }
+  }
+
+  const handleOverlappingSchedule = (schedule) => {
+    for (let day in schedule){
+      for (let interval in schedule[day]){
+        const items = schedule[day][interval];
+
+        if(items.length){
+          const teacherConflict = items.some((item, index) =>
+          items.slice(index + 1).some(otherItem => otherItem.teacherId === item.teacherId)
+          );
+
+          // Check for room conflicts
+          const roomConflict = items.some((item, index) =>
+            items.slice(index + 1).some(otherItem => otherItem.roomId === item.roomId)
+          );
+          if(teacherConflict || roomConflict){
+            return true;
+          }
+        }
+      }
+      
+    }
+    return false;
+  }
 
   return (
     <div>
@@ -252,7 +307,7 @@ export default function AdminSchedule() {
                   selectedRooms[selectedProgram]?.[selectedYear]?.[
                     `${dayData.day}-${cell.interval}`
                   ] ? (
-                    // Then show selected coruse and room data
+                    // Then show selected course and room data
                     <div>
                       <div>
                         {
@@ -281,7 +336,7 @@ export default function AdminSchedule() {
                       </div>
                       <button
                         onClick={() => {
-                          handleRemoveCourseAndRoom2(
+                          handleRemoveCourseAndRoom(
                             dayData.day,
                             cell.interval,
                           );
@@ -295,14 +350,14 @@ export default function AdminSchedule() {
                     <ScheduleCell
                       dayData={dayData}
                       cell={cell}
-                      filteredCourses={filteredCourses}
-                      rooms={filteredRooms}
+                      visibleCourses={visibleCourses}
+                      rooms={visibleRooms}
                       selectedCourses={selectedCourses}
                       handleCourseChange={handleCourseChange}
+                      handleClassroomChange ={handleClassroomChange}
                       setSelectedCourses={setSelectedCourses}
                       selectedRooms={selectedRooms}
                       setSelectedRooms={setSelectedRooms}
-                      handleRoomChange={handleRoomChange}
                       selectedProgram={selectedProgram}
                       selectedYear={selectedYear}
                     />
@@ -316,7 +371,7 @@ export default function AdminSchedule() {
       <div>
         <button
           onClick={() => {
-
+            console.log(handleOverlappingSchedule(schedule));
           }}
         >
           Save changes

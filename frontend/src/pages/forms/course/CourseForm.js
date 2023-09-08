@@ -1,6 +1,7 @@
 import React from "react";
 import "./CourseForm.css";
 import axiosInstance from "../../../axios";
+import { handleError } from "../../../utils";
 
 export default function CourseForm() {
   const handleSubmit = async (e) => {
@@ -16,7 +17,6 @@ export default function CourseForm() {
         program: data.get("program"),
         year: data.get("year"),
       };
-      console.log(courseData);
 
       const access_token = localStorage.getItem("access_token");
       // debugger;
@@ -33,7 +33,8 @@ export default function CourseForm() {
       alert(`Course created succesfuly!`);
     } catch (error) {
       alert(`Something went wrong, check the data and try again.`);
-      console.error("Error submitting form:", error.response.data);
+      console.log(error)
+      handleError(error)
     }
   };
 

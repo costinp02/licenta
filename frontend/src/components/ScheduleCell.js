@@ -5,16 +5,16 @@ export const ScheduleCell = ({
   dayData,
   cell,
 
-  filteredCourses,
+  visibleCourses,
   rooms,
 
   selectedCourses,
   setSelectedCourses,
   handleCourseChange,
+  handleClassroomChange,
 
   selectedRooms,
   setSelectedRooms,
-  handleRoomChange,
 
   selectedProgram,
   selectedYear,
@@ -65,12 +65,12 @@ export const ScheduleCell = ({
             backgroundColor: isFocused ? "#f5f5f5" : "transparent",
           }),
         }}
-        options={filteredCourses.map((course) => ({
+        options={visibleCourses.filter(course => course.show).map((course) => ({
           value: course.id,
           label: course.name,
         }))}
         onChange={(selectedOption) => {
-          const course = filteredCourses.find(
+          const course = visibleCourses.find(
             (course) => course.id === selectedOption.value,
           );
           handleCourseChange(dayData.day, cell.interval, selectedOption.value);
@@ -121,7 +121,8 @@ export const ScheduleCell = ({
         }))}
         onChange={(selectedOption) => {
           const room = rooms.find((room) => room.id === selectedOption.value);
-          handleRoomChange(dayData.day, cell.interval, selectedOption.value);
+          handleClassroomChange(dayData.day, cell.interval, selectedOption.value)
+          
 
           setSelectedRooms((prevSelectedRooms) => ({
             ...selectedRooms,
