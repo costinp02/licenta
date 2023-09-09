@@ -13,12 +13,12 @@ class ScheduleSerializer(serializers.ModelSerializer):
         classroom = ClassroomSerializer
         fields = [
             'id',
+            'day_of_week',
             'time',
             'course',
-            'teacher',
             'classroom'
         ]
 
     def create(self, validated_data):
         return super().create(validated_data)
-        
+    

@@ -22,7 +22,6 @@ export default function AdminSchedule() {
 
   const fetchRooms = useCallback(async () => {
     try {
-      // debugger;
       const response = await axiosInstance.get("/classrooms/", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -34,7 +33,6 @@ export default function AdminSchedule() {
       });
       setClassrooms(response.data);
     } catch (error) {
-      debugger;
       handleError(error);
     }
   }, []);
@@ -94,9 +92,6 @@ export default function AdminSchedule() {
     })
     setVisibleCourses(updatedVisibleCourses);
 
-    // debugger;
-    
-
     if(selectedRooms[selectedProgram]?.[selectedYear]?.[mapKey]){
       const roomId = selectedRooms[selectedProgram]?.[selectedYear]?.[mapKey].id;
       updateSchedule(day, interval, courseId, roomId)
@@ -127,7 +122,6 @@ export default function AdminSchedule() {
 
 
   const handleRemoveCourseAndRoom = (day, interval) => {
-    // debugger;
     const mapKey = `${day}-${interval}`;
     const courseId = selectedCourses[selectedProgram][selectedYear][mapKey]?.id;
     const roomId = selectedRooms[selectedProgram][selectedYear][mapKey]?.id;
@@ -164,7 +158,6 @@ export default function AdminSchedule() {
     delete newSelectedRooms[selectedProgram][selectedYear][mapKey];
     setSelectedRooms(newSelectedRooms);
 
-    debugger;
     removeFromSchedule(day, interval, courseId, roomId);
   };
 
@@ -180,6 +173,36 @@ export default function AdminSchedule() {
     }
   }
 
+  const postSchedule = async () => {
+    try{
+      const formattedSchedule = Object.entries(schedule).flatMap(([day, intervals]) => {
+        return Object.entries(intervals).map(([interval, items]) => {
+          return items.map(item => {
+            return {
+              day_of_week: day,
+              time: interval,
+              course: item.courseId,
+              classroom: item.roomId
+            };
+          });
+        }).flat();
+      });
+      console.log(formattedSchedule);
+
+      const response = await axiosInstance.post('/schedules/', formattedSchedule, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        }
+      });
+      if (response.status === 201) {
+        console.log("Schedule created successfully");
+      }
+    } catch (error) {
+      console.log(error);
+      handleError(error);
+    }
+  }
+
   const handleOverlappingSchedule = (schedule) => {
     for (let day in schedule){
       for (let interval in schedule[day]){
@@ -190,7 +213,6 @@ export default function AdminSchedule() {
           items.slice(index + 1).some(otherItem => otherItem.teacherId === item.teacherId)
           );
 
-          // Check for room conflicts
           const roomConflict = items.some((item, index) =>
             items.slice(index + 1).some(otherItem => otherItem.roomId === item.roomId)
           );
@@ -370,9 +392,9 @@ export default function AdminSchedule() {
       </table>
       <div>
         <button
-          onClick={() => {
-            console.log(handleOverlappingSchedule(schedule));
-          }}
+          onClick={
+            !handleOverlappingSchedule(schedule) ? postSchedule : console.log('f')
+          }
         >
           Save changes
         </button>

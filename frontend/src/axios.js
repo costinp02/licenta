@@ -25,7 +25,6 @@ axiosInstance.interceptors.response.use(
     if (typeof error.response === "undefined") {
       alert(
         "A server/network error occurred. " +
-          "Looks like CORS might be the problem. " +
           "Sorry about this - we will get it fixed shortly.",
       );
       return Promise.reject(error);
@@ -76,7 +75,6 @@ axiosInstance.interceptors.response.use(
 
           const navigate = useNavigate();
           navigate("/", { redirect: true });
-          // window.location.href = "/";
         }
       } else {
         console.log("Refresh token not available.");
@@ -84,7 +82,6 @@ axiosInstance.interceptors.response.use(
 
         const navigate = useNavigate();
         navigate("/", { redirect: true });
-        // window.location.href = "/";
       }
     }
 

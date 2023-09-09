@@ -91,6 +91,8 @@ class StudentRegisterSerializer(serializers.ModelSerializer):
         # print(user_data['role'])
         user_data['role'] = User.Role.STUDENT
         user = User.objects.create( **user_data)
+        user.set_password(user_data['password'])
+        user.save()
         student = Student.objects.create(user=user, **validated_data)
         return student
 
@@ -110,17 +112,16 @@ class StudentEditSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         user_data = validated_data.pop('user')
         user = instance.user
-        print(instance.program)
 
         instance.program = validated_data.get('program', instance.program)
         instance.year = validated_data.get('year', instance.year)
         instance.group = validated_data.get('group', instance.group)
         instance.save()
-        print(instance.program)
         user.first_name = user_data.get('first_name', user.first_name)
         user.last_name = user_data.get('last_name', user.last_name)
+        if(user_data["password"]):
+            user.set_password(user_data["password"])
         user.save()
-        print(instance.program)
         return instance
     
 
@@ -146,6 +147,7 @@ class TeacherRegisterSerializer(serializers.ModelSerializer):
         print(user_data['role'])
         user_data['role'] = User.Role.TEACHER
         user = User.objects.create( **user_data)
+        user.set_password(user_data['password'])
         teacher = Teacher.objects.create(user=user, **validated_data)
         return teacher
     

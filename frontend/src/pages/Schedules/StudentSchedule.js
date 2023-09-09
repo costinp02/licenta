@@ -1,10 +1,23 @@
-import React from "react";
-import { scheduleCells } from "../../utils";
+import React, { useCallback } from "react";
+import { handleError, scheduleCells } from "../../utils";
 import "./Schedule.css";
 import { handleProgram } from "../../utils";
+import axiosInstance from "../../axios";
 
 export default function StudentSchedule() {
   const student = JSON.parse(localStorage.getItem("user_data"));
+
+  const fetchSchedule = useCallback(async () => {
+    try{
+      const result = await axiosInstance.get("/schedules/",  {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        }
+      })
+    } catch (error) {
+      handleError(error);
+    }
+  })
 
   return (
     <>

@@ -70,8 +70,8 @@ export default function SignIn() {
         console.log("Error status:", status);
         console.log("Error message:", data.message);
         alert("Please use a valid email and password");
-        event.target.elements.email.value = "";
-        event.target.elements.password.value = "";
+        // event.target.elements.email.value = "";
+        // event.target.elements.password.value = "";
         // Update state with the error message for displaying on the sign-in page
       } else if (error.request) {
         // The request was made but no response was received
