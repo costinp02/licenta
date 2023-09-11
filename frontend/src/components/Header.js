@@ -27,7 +27,7 @@ export default function Header(props) {
       </p>
       <ul>
         <li>
-          <a href="/home">About</a>
+          <a href="/about">About</a>
         </li>
         <li>
           <a href="/contact-us">Contact</a>

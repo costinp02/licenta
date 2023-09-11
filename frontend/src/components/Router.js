@@ -2,11 +2,13 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Contact from "../pages/Contact";
+import About from "../pages/About";
 import SignIn from "../pages/SignIn";
 import AdminSchedule from "../pages/Schedules/AdminSchedule";
 import StudentSchedule from "../pages/Schedules/StudentSchedule";
 import TeacherSchedule from "../pages/Schedules/TeacherSchedule";
 import AdminDashboard from "../pages/AdminDasboard/AdminDashboard";
+import ScheduleWarning from "../pages/Schedules/ScheduleWarning";
 import CourseForm from "../pages/forms/course/CourseForm";
 import RoomForm from "../pages/forms/room/RoomForm";
 import StudentForm from "../pages/forms/student/StudentForm";
@@ -49,6 +51,7 @@ export default function Router() {
           {/*Children Routes */}
           <Route path="/" element={<SignIn />} />
           <Route path="/contact-us" element={<Contact />} />
+          <Route path="/about" element={<About />} />
           <Route
             path="/student"
             element={
@@ -70,6 +73,14 @@ export default function Router() {
             element={
               <ProtectedRoute>
                 <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/schedule-warning"
+            element={
+              <ProtectedRoute>
+                <ScheduleWarning />
               </ProtectedRoute>
             }
           />

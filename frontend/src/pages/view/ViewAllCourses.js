@@ -1,5 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axiosInstance from "../../axios";
+import './ViewData.css';
+import { handleProgram } from "../../utils";
 
 export default function ViewAllCourses() {
   const [courses, setCourses] = useState([]);
@@ -36,25 +39,28 @@ export default function ViewAllCourses() {
   }, [fetchCourses]);
 
   const listCourses = courses.map((course) => (
-    <div key={course.id}>
-      <p>
-        <b>{`Name: ${course.name}`}</b>
-      </p>
+    <div key={course.id} className="container">
+      <div className="div-container">
+        <p className="p">
+          <b>{`Name: ${course.name}`}</b>
+        </p>
 
-      <p>
-        <b>{`Program: ${course.program}`}</b>
-      </p>
+        <p className="p">
+          <b className="text">{`Program: ${handleProgram(course.program)}`}</b>
+        </p>
 
-      <p>
-        <b>{`Teacher: ${course.teacher.user.first_name} ${course.teacher.user.last_name}`}</b>
-      </p>
+        <p className="p">
+          <b className="text">{`Teacher: ${course.teacher.user.first_name} ${course.teacher.user.last_name}`}</b>
+        </p>
 
-      <p>
-        <b>{`Year: ${course.year}`}</b>
-      </p>
-      <a href={`/admin/course-form/edit/${course.id}`} className="btn">
-        Edit
-      </a>
+        <p className="p">
+          <b className="text">{`Year: ${course.year}`}</b>
+        </p>
+
+        <Link to={`/admin/course-form/edit/${course.id}`} className="btn">
+          Edit
+        </Link>
+      </div>
     </div>
   ));
 

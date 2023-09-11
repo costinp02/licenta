@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axios";
+import './ViewData.css';
 
 export default function ViewALLRooms() {
   const [classrooms, setClassrooms] = useState([]);
@@ -42,21 +43,24 @@ export default function ViewALLRooms() {
   }, [fetchRooms]);
 
   const listRooms = classrooms.map((room) => (
-    <div>
-      <p>
-        <b>{`Name: ${room.name}`}</b>
-      </p>
+    <div key={room.id} className="container">
+      <div className="div-container">
+        <p className="p">
+          <b className="text">{`Name: ${room.name}`}</b>
+        </p>
 
-      <p>
-        <b>{`Capacity: ${room.capacity} seats`}</b>
-      </p>
+        <p className="p">
+          <b className="text">{`Capacity: ${room.capacity} seats`}</b>
+        </p>
 
-      <p>
-        <b>{`Floor: ${room.floor}`}</b>
-      </p>
-      <Link to={`/admin/room-form/edit/${room.id}`} className="btn">
-        Edit
-      </Link>
+        <p className="p">
+          <b className="text">{`Floor: ${room.floor}`}</b>
+        </p>
+
+        <Link to={`/admin/room-form/edit/${room.id}`} className="btn">
+          Edit
+        </Link>
+      </div>
     </div>
   ));
   return (

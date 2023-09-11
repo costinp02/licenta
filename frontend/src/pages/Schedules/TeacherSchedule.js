@@ -1,12 +1,37 @@
-import React from "react";
-import { scheduleCells } from "../../utils";
+import React, { useCallback, useEffect, useState } from "react";
+import { handleError, scheduleCells } from "../../utils";
+import axiosInstance from "../../axios";
 import "./Schedule.css";
 
 export default function TeacherSchedule() {
+  const teacher = JSON.parse(localStorage.getItem("user_data"));
+  const [teacherSchedule, setTeacherSchedule] = useState([]);
+
+  const fetchSchedule = useCallback(async () => {
+    try{
+      const result = await axiosInstance.get("/schedules/view",  {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        } 
+      })
+      let schedules = result.data.filter((schedule) =>
+      schedule.course.teacher.user.id === teacher.user.id)
+      setTeacherSchedule(schedules);
+      console.log(teacherSchedule);
+    } catch (error){
+      handleError(error);
+    }
+  }, [teacherSchedule, teacher])
+
+  useEffect(() => {
+    fetchSchedule()
+// eslint-disable-next-line
+  }, [])
+
   return (
     <>
       <div className="teacher-data">
-        <h4>User name</h4>
+        <h4>{`${teacher.user.first_name} ${teacher.user.last_name}`}</h4>
       </div>
 
       <table className="schedule">
@@ -26,11 +51,27 @@ export default function TeacherSchedule() {
           {scheduleCells.map((dayData) => (
             <tr key={dayData.day}>
               <th>{dayData.day}</th>
-              {dayData.cells.map((cell) => (
-                <td key={cell.interval}>
-                  <div>hello</div>
-                </td>
-              ))}
+              {dayData.cells.map((cell) => {
+                const matchingSchedule = teacherSchedule.find(
+                  (schedule) => 
+                    schedule.day_of_week === dayData.day && 
+                    schedule.time === cell.interval
+                );
+
+                return (
+                  <td key={cell.interval}>
+                    {matchingSchedule ? (
+                      <>
+                        <div>{matchingSchedule.course.name}</div>
+                        <div>{matchingSchedule.course.course_type}</div>
+                        <div>{matchingSchedule.classroom.name}</div>
+                      </>
+                    ) : (
+                      <div></div>
+                    )}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>

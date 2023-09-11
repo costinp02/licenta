@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { handleError, scheduleCells } from "../../utils";
 import "./Schedule.css";
 import { handleProgram } from "../../utils";
@@ -6,18 +6,30 @@ import axiosInstance from "../../axios";
 
 export default function StudentSchedule() {
   const student = JSON.parse(localStorage.getItem("user_data"));
+  const [studentSchedule, setStudentSchedule] = useState([]);
 
   const fetchSchedule = useCallback(async () => {
     try{
-      const result = await axiosInstance.get("/schedules/",  {
+      const result = await axiosInstance.get("/schedules/view",  {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        }
+        } 
       })
+      let schedules = result.data.filter((schedule) => 
+        schedule.course.program === student.program &&
+        schedule.course.year === student.year)
+        setStudentSchedule(schedules);
+        console.log(studentSchedule);
     } catch (error) {
       handleError(error);
     }
-  })
+  }, [studentSchedule, setStudentSchedule, student])
+
+
+  useEffect(() =>{
+    fetchSchedule();
+// eslint-disable-next-line
+  }, [])
 
   return (
     <>
@@ -45,14 +57,29 @@ export default function StudentSchedule() {
           {scheduleCells.map((dayData) => (
             <tr key={dayData.day}>
               <th>{dayData.day}</th>
-              {dayData.cells.map((cell) => (
-                <td key={cell.interval}>
-                  <div>{cell.courses.name}</div>
-                  <div>{cell.courses.teacher_name}</div>
-                  <div>{cell.courses.course_type}</div>
-                  <div>{cell.courses.room}</div>
-                </td>
-              ))}
+              {dayData.cells.map((cell) => {
+                const matchingSchedule = studentSchedule.find(
+                  (schedule) => 
+                    schedule.day_of_week === dayData.day && 
+                    schedule.time === cell.interval
+                );
+
+                return (
+                  <td key={cell.interval}>
+                    {matchingSchedule ? (
+                      <>
+                        <div>{matchingSchedule.course.name}</div>
+                        <div>{`${matchingSchedule.course.teacher.user.first_name} 
+                          ${matchingSchedule.course.teacher.user.last_name}`}</div> 
+                        <div>{matchingSchedule.course.course_type}</div>
+                        <div>{matchingSchedule.classroom.name}</div>
+                      </>
+                    ) : (
+                      <div></div>
+                    )}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>

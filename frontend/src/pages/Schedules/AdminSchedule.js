@@ -226,6 +226,10 @@ export default function AdminSchedule() {
     return false;
   }
 
+  const overlapAlert = () => {
+    alert('Overlapping detected! Please check selected data and modify accordingly.')
+  }
+
   return (
     <div>
       <h2>Orar</h2>
@@ -393,7 +397,7 @@ export default function AdminSchedule() {
       <div>
         <button
           onClick={
-            !handleOverlappingSchedule(schedule) ? postSchedule : console.log('f')
+            !handleOverlappingSchedule(schedule) ? postSchedule : overlapAlert
           }
         >
           Save changes

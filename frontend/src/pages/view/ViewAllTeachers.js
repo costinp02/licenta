@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axios";
+import './ViewData.css';
 
 export default function ViewAllTeachers() {
   const [teachers, setTeachers] = useState([]);
@@ -36,13 +37,15 @@ export default function ViewAllTeachers() {
   }, [fetchTeachers]);
 
   const listTeachers = teachers.map((teacher) => (
-    <div>
-      <p>
-        <b>{`Name: ${teacher.user.first_name} ${teacher.user.last_name}`}</b>
-      </p>
-      <Link to={`/admin/teacher-form/edit/${teacher.user.id}`} className="btn">
-        Edit
-      </Link>
+    <div key={teacher.user.id} className="container">
+      <div className="div-container">
+        <p className="p">
+          <b className="text">{`Name: ${teacher.user.first_name} ${teacher.user.last_name}`}</b>
+        </p>
+        <Link to={`/admin/teacher-form/edit/${teacher.user.id}`} className="btn">
+          Edit
+        </Link>
+      </div>
     </div>
   ));
 

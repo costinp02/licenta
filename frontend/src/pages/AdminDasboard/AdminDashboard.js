@@ -1,7 +1,34 @@
-import React from "react";
+import React, { useCallback } from "react";
 import "./AdminDashboard.css";
+import { handleError } from "../../utils";
+import axiosInstance from "../../axios";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminDashboard() {
+  const navigate = useNavigate();
+  const fetchSchedules = useCallback(async () => {
+    try{
+      const response = await axiosInstance.get("/schedules", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+      return response.data;
+
+    } catch (error) {
+      handleError(error);
+    }
+  }, [])
+
+  const handleCreateSchedule = useCallback( async (e) => {
+    e.preventDefault();
+    const schedules = await fetchSchedules();
+    if (schedules && schedules.length > 0 ){ 
+      navigate("/admin/schedule-warning");
+    } else {
+      navigate("/admin/schedule");
+    }
+  }, [fetchSchedules, navigate])
   return (
     <>
       <div className="admin-home-container">
@@ -37,8 +64,9 @@ export default function AdminDashboard() {
           </div>
         </div>
         <div className="last-button">
-          <a className="admin-button view-schedule" href="/admin/schedule">
-            View Schedule
+        {/* eslint-disable-next-line */}
+          <a className="admin-button view-schedule" onClick={handleCreateSchedule}>
+            Create Schedule
           </a>
         </div>
       </div>

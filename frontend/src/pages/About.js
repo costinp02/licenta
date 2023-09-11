@@ -1,8 +1,9 @@
-export default function Home() {
+export default function About() {
   return (
     <>
-      <h1>Home</h1>
-      <p>This is the home page.</p>
+      <h1>About</h1>
+      <p>Check this site periodcally to see if schedule has changed</p>
+      <p>If you have any problems please contact our staff.</p>
     </>
   );
 }

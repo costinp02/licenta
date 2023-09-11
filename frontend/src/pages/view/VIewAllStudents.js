@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axios";
 import { handleProgram } from "../../utils";
+import './ViewData.css';
 
 export default function ViewAllStudents() {
   const [students, setStudents] = useState([]);
@@ -37,21 +38,24 @@ export default function ViewAllStudents() {
   }, [fetchStudents]);
 
   const listStudents = students.map((student) => (
-    <div>
-      <p>
-        <b>{`Name: ${student.user.first_name}  ${student.user.last_name}`}</b>
-      </p>
+    <div key={student.user.id} className="container">
+      <div className="div-container">
+        <p className="p">
+          <b className="text">{`Name: ${student.user.first_name}  ${student.user.last_name}`}</b>
+        </p>
 
-      <p>
-        <b>{`Program: ${handleProgram(student.program)}`}</b>
-      </p>
+        <p className="p">
+          <b className="text">{`Program: ${handleProgram(student.program)}`}</b>
+        </p>
 
-      <p>
-        <b>{`Year: ${student.year}  `}</b>
-      </p>
-      <Link to={`/admin/student-form/edit/${student.user.id}`} className="btn">
-        Edit
-      </Link>
+        <p className="p">
+          <b className="text">{`Year: ${student.year}  `}</b>
+        </p>
+        
+        <Link to={`/admin/student-form/edit/${student.user.id}`} className="btn">
+          Edit
+        </Link>
+      </div>
     </div>
   ));
 
@@ -59,3 +63,5 @@ export default function ViewAllStudents() {
     <>{students.length ? <div>{listStudents}</div> : <div>No students</div>}</>
   );
 }
+
+
