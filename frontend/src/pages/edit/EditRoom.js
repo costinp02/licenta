@@ -33,7 +33,7 @@ export default function RoomEdit() {
     } catch (error) {
       handleError(error);
     }
-  },[id, room]);
+  }, [id, room]);
 
   useEffect(() => {
     fetchRoom();

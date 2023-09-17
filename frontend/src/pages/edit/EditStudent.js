@@ -143,9 +143,7 @@ export default function StudentEdit() {
               name="year"
               required
               value={student.year || ""}
-              onChange={(e) => 
-                setStudent({ ...student, year: e.target.value })
-              }
+              onChange={(e) => setStudent({ ...student, year: e.target.value })}
             />
           </div>
           <div className="form-group">

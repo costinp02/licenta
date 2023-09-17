@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axios";
-import './ViewData.css';
+import "./ViewData.css";
 
 export default function ViewALLRooms() {
   const [classrooms, setClassrooms] = useState([]);

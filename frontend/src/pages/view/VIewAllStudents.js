@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axios";
 import { handleProgram } from "../../utils";
-import './ViewData.css';
+import "./ViewData.css";
 
 export default function ViewAllStudents() {
   const [students, setStudents] = useState([]);
@@ -51,8 +51,11 @@ export default function ViewAllStudents() {
         <p className="p">
           <b className="text">{`Year: ${student.year}  `}</b>
         </p>
-        
-        <Link to={`/admin/student-form/edit/${student.user.id}`} className="btn">
+
+        <Link
+          to={`/admin/student-form/edit/${student.user.id}`}
+          className="btn"
+        >
           Edit
         </Link>
       </div>
@@ -63,5 +66,3 @@ export default function ViewAllStudents() {
     <>{students.length ? <div>{listStudents}</div> : <div>No students</div>}</>
   );
 }
-
-

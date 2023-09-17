@@ -18,27 +18,27 @@ export let scheduleCells = [
     cells: [
       {
         interval: "8-10",
-        courses: []
+        courses: [],
       },
       {
         interval: "10-12",
-        courses: []
+        courses: [],
       },
       {
         interval: "12-14",
-        courses: []
+        courses: [],
       },
       {
         interval: "14-16",
-        courses: []
+        courses: [],
       },
       {
         interval: "16-18",
-        courses: []
+        courses: [],
       },
       {
         interval: "18-20",
-        courses: []
+        courses: [],
       },
     ],
   },
@@ -48,27 +48,27 @@ export let scheduleCells = [
     cells: [
       {
         interval: "8-10",
-        courses: []
+        courses: [],
       },
       {
         interval: "10-12",
-        courses: []
+        courses: [],
       },
       {
         interval: "12-14",
-        courses: []
+        courses: [],
       },
       {
         interval: "14-16",
-        courses: []
+        courses: [],
       },
       {
         interval: "16-18",
-        courses: []
+        courses: [],
       },
       {
         interval: "18-20",
-        courses: []
+        courses: [],
       },
     ],
   },
@@ -77,27 +77,27 @@ export let scheduleCells = [
     cells: [
       {
         interval: "8-10",
-        courses: []
+        courses: [],
       },
       {
         interval: "10-12",
-        courses: []
+        courses: [],
       },
       {
         interval: "12-14",
-        courses: []
+        courses: [],
       },
       {
         interval: "14-16",
-        courses: []
+        courses: [],
       },
       {
         interval: "16-18",
-        courses: []
+        courses: [],
       },
       {
         interval: "18-20",
-        courses: []
+        courses: [],
       },
     ],
   },
@@ -107,27 +107,27 @@ export let scheduleCells = [
     cells: [
       {
         interval: "8-10",
-        courses: []
+        courses: [],
       },
       {
         interval: "10-12",
-        courses: []
+        courses: [],
       },
       {
         interval: "12-14",
-        courses: []
+        courses: [],
       },
       {
         interval: "14-16",
-        courses: []
+        courses: [],
       },
       {
         interval: "16-18",
-        courses: []
+        courses: [],
       },
       {
         interval: "18-20",
-        courses: []
+        courses: [],
       },
     ],
   },
@@ -137,27 +137,27 @@ export let scheduleCells = [
     cells: [
       {
         interval: "8-10",
-        courses: []
+        courses: [],
       },
       {
         interval: "10-12",
-        courses: []
+        courses: [],
       },
       {
         interval: "12-14",
-        courses: []
+        courses: [],
       },
       {
         interval: "14-16",
-        courses: []
+        courses: [],
       },
       {
         interval: "16-18",
-        courses: []
+        courses: [],
       },
       {
         interval: "18-20",
-        courses: []
+        courses: [],
       },
     ],
   },
@@ -613,16 +613,15 @@ export let rooms = [
 ];
 
 export const handleProgram = (program) => {
-    switch (program) {
-      case "MATH":
-        return "Mathematics";
-      case "CS":
-        return "Computer Science";
-      case "CTI":
-        return "CTI";
-      default:
-        break;
-    
+  switch (program) {
+    case "MATH":
+      return "Mathematics";
+    case "CS":
+      return "Computer Science";
+    case "CTI":
+      return "CTI";
+    default:
+      break;
   }
 };
 

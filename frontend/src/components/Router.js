@@ -188,9 +188,7 @@ export default function Router() {
               </ProtectedRoute>
             }
           />
-
         </Route>
-        
       </Routes>
     </BrowserRouter>
   );

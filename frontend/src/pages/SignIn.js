@@ -45,20 +45,26 @@ export default function SignIn() {
 
       switch (user_role) {
         case "STUDENT":
-          const student = await axiosInstance.get(`users/students/${user_id}/`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          const student = await axiosInstance.get(
+            `users/students/${user_id}/`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+              },
             },
-          });
+          );
           localStorage.setItem("user_data", JSON.stringify(student.data));
           navigate("/student", { replace: true });
           break;
         case "TEACHER":
-          const teacher = await axiosInstance.get(`users/teachers/${user_id}/`,{
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          const teacher = await axiosInstance.get(
+            `users/teachers/${user_id}/`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+              },
             },
-          });
+          );
           localStorage.setItem("user_data", JSON.stringify(teacher.data));
           navigate("/teacher", { replace: true });
           break;

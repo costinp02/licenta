@@ -9,27 +9,28 @@ export default function StudentSchedule() {
   const [studentSchedule, setStudentSchedule] = useState([]);
 
   const fetchSchedule = useCallback(async () => {
-    try{
-      const result = await axiosInstance.get("/schedules/view",  {
+    try {
+      const result = await axiosInstance.get("/schedules/view", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        } 
-      })
-      let schedules = result.data.filter((schedule) => 
-        schedule.course.program === student.program &&
-        schedule.course.year === student.year)
-        setStudentSchedule(schedules);
-        console.log(studentSchedule);
+        },
+      });
+      let schedules = result.data.filter(
+        (schedule) =>
+          schedule.course.program === student.program &&
+          schedule.course.year === student.year,
+      );
+      setStudentSchedule(schedules);
+      console.log(studentSchedule);
     } catch (error) {
       handleError(error);
     }
-  }, [studentSchedule, setStudentSchedule, student])
+  }, [studentSchedule, setStudentSchedule, student]);
 
-
-  useEffect(() =>{
+  useEffect(() => {
     fetchSchedule();
-// eslint-disable-next-line
-  }, [])
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
@@ -59,9 +60,9 @@ export default function StudentSchedule() {
               <th>{dayData.day}</th>
               {dayData.cells.map((cell) => {
                 const matchingSchedule = studentSchedule.find(
-                  (schedule) => 
-                    schedule.day_of_week === dayData.day && 
-                    schedule.time === cell.interval
+                  (schedule) =>
+                    schedule.day_of_week === dayData.day &&
+                    schedule.time === cell.interval,
                 );
 
                 return (
@@ -70,7 +71,7 @@ export default function StudentSchedule() {
                       <>
                         <div>{matchingSchedule.course.name}</div>
                         <div>{`${matchingSchedule.course.teacher.user.first_name} 
-                          ${matchingSchedule.course.teacher.user.last_name}`}</div> 
+                          ${matchingSchedule.course.teacher.user.last_name}`}</div>
                         <div>{matchingSchedule.course.course_type}</div>
                         <div>{matchingSchedule.classroom.name}</div>
                       </>

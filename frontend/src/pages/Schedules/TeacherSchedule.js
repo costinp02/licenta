@@ -8,25 +8,26 @@ export default function TeacherSchedule() {
   const [teacherSchedule, setTeacherSchedule] = useState([]);
 
   const fetchSchedule = useCallback(async () => {
-    try{
-      const result = await axiosInstance.get("/schedules/view",  {
+    try {
+      const result = await axiosInstance.get("/schedules/view", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        } 
-      })
-      let schedules = result.data.filter((schedule) =>
-      schedule.course.teacher.user.id === teacher.user.id)
+        },
+      });
+      let schedules = result.data.filter(
+        (schedule) => schedule.course.teacher.user.id === teacher.user.id,
+      );
       setTeacherSchedule(schedules);
       console.log(teacherSchedule);
-    } catch (error){
+    } catch (error) {
       handleError(error);
     }
-  }, [teacherSchedule, teacher])
+  }, [teacherSchedule, teacher]);
 
   useEffect(() => {
-    fetchSchedule()
-// eslint-disable-next-line
-  }, [])
+    fetchSchedule();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
@@ -53,9 +54,9 @@ export default function TeacherSchedule() {
               <th>{dayData.day}</th>
               {dayData.cells.map((cell) => {
                 const matchingSchedule = teacherSchedule.find(
-                  (schedule) => 
-                    schedule.day_of_week === dayData.day && 
-                    schedule.time === cell.interval
+                  (schedule) =>
+                    schedule.day_of_week === dayData.day &&
+                    schedule.time === cell.interval,
                 );
 
                 return (

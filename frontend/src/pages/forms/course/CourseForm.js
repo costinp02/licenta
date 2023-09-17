@@ -33,8 +33,8 @@ export default function CourseForm() {
       alert(`Course created succesfuly!`);
     } catch (error) {
       alert(`Something went wrong, check the data and try again.`);
-      console.log(error)
-      handleError(error)
+      console.log(error);
+      handleError(error);
     }
   };
 
@@ -93,4 +93,3 @@ export default function CourseForm() {
     </>
   );
 }
-
