@@ -41,8 +41,8 @@ export const ScheduleCell = ({
 
           singleValue: (provided) => ({
             ...provided,
-            overflow: "hidden",
-            textOverflow: "ellipsis",
+            wordWrap: "break-word",
+            fontSize: "1px"
           }),
 
           menu: (provided) => ({
@@ -94,11 +94,14 @@ export const ScheduleCell = ({
         styles={{
           menu: (baseStyles) => ({
             ...baseStyles,
-            whiteSpace: "normal",
-            lineHeight: "1.2",
             position: "absolute",
+            backgroundColor: "#fff",
+            border: "1px solid #ccc",
+            borderRadius: "6px",
+            zIndex: 10,
             width: "100%",
-            fontSize: "16px",
+            maxHeight: "400px",
+            overflowY: "auto",
           }),
 
           option: (baseStyles, { isFocused }) => ({
@@ -113,6 +116,7 @@ export const ScheduleCell = ({
           singleValue: (provided) => ({
             ...provided,
             wordWrap: "break-word",
+            fontSize: "1px"
           }),
         }}
         options={rooms.map((room) => ({

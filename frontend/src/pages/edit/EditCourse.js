@@ -84,23 +84,18 @@ export default function CourseEdit() {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="teacher_id">Teacher ID:</label>
+    <label htmlFor="teacher_id">Teacher ID:</label>
                         <input 
-                        type="text" 
-                        id="teacher_id" 
-                        name="teacher_id" 
-                        required 
-                        value={course.teacher?.user?.id || ''} 
-                        onChange={(e) => setCourse(prev => ({
-                            ...prev,
-                            teacher: {
-                                ...prev.teacher,
-                                user: {
-                                    id: e.target.value
-                                }
-                            }
-                        }))} 
-                    />
+                            type="text" 
+                            id="teacher_id" 
+                            name="teacher_id" 
+                            required 
+                            value={course.teacher || ''} 
+                            onChange={(e) => setCourse(prev => ({
+                                ...prev,
+                                teacher: e.target.value
+                            }))} 
+                        />
                     </div>
                     <div className="form-group">
                         <label htmlFor="credit_number">Credit Number:</label>
@@ -134,7 +129,7 @@ export default function CourseEdit() {
                     </div>
                     <button type="submit">Save Changes</button>
                     <button type="button" onClick={handleDeleteCourse}>
-                        Delete Room
+                        Delete Course
                     </button>
                 </form>
             </div>

@@ -196,6 +196,7 @@ export default function AdminSchedule() {
       });
       if (response.status === 201) {
         console.log("Schedule created successfully");
+        alert("Schedule crearted succesfuly!");
       }
     } catch (error) {
       console.log(error);

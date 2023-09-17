@@ -36,8 +36,11 @@ export default function ScheduleWarning () {
             <div className="container">
                 <h2>Warning</h2>
                 <p>Existing schedule data will be deleted. Do you wish to continue?</p>
+                <div className='button-div'>
                 <button onClick={handleCancel}>Cancel</button>
                 <button onClick={handleContinue}>Continue</button>
+                </div>
+                
             </div>
         </>
     )

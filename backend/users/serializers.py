@@ -148,6 +148,7 @@ class TeacherRegisterSerializer(serializers.ModelSerializer):
         user_data['role'] = User.Role.TEACHER
         user = User.objects.create( **user_data)
         user.set_password(user_data['password'])
+        user.save()
         teacher = Teacher.objects.create(user=user, **validated_data)
         return teacher
     
@@ -166,9 +167,6 @@ class TeacherEditSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         user_data = validated_data.pop('user')
         user = instance.user
-        # print(user_data['password'])
-        # instance.courses.set(validated_data.get('courses', instance.courses))
-
         instance.phone = validated_data.get('phone', instance.phone)
         instance.save()
         user.first_name = user_data.get('first_name', user.first_name)
@@ -177,7 +175,6 @@ class TeacherEditSerializer(serializers.ModelSerializer):
             instance.user.set_password(user_data['password'])
             print("password was changed")
         user.save()
-        # print(instance.user.password)
 
         return instance
     
